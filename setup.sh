@@ -9,7 +9,7 @@ while ! [[ $containerName =~ ^[[:lower:]_]+$ ]]; do
 	echo "Please choose another name without uppercase and number, only letters."
 	read containerName
 done
-echo "You container name: $containerName"
+echo "Your container name: $containerName"
 
 
 echo "Please specify you database parameters in next steps:"
