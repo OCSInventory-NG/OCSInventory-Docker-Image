@@ -100,7 +100,7 @@ ADD /conf/z-ocsinventory-server.conf /etc/apache2/conf-available/
 
 ADD dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/
 
-ADD scripts/run.sh /root/run.sh
+ADD ./scripts/run.sh /root/run.sh
 RUN chmod +x /root/run.sh
 
 
