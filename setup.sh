@@ -12,7 +12,7 @@ done
 echo "Your container name: $containerName"
 
 
-echo "Please specify you database parameters in next steps:"
+echo "Please specify your database parameters in next steps:"
 
 echo "Database name"
 read databaseName
