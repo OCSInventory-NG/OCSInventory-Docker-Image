@@ -39,8 +39,8 @@ OCS Inventory NG includes the packet deployment functionality to be sure that al
 Starting a **OCSInventory container** is simple:
 Clone this repository :
 
-> sudo git clone https://github.com/OCSInventory-NG/OCSInventory-Docker-Image.git
-> cd OCSInventory-Docker-Image
+> sudo git clone https://github.com/OCSInventory-NG/OCSInventory-Docker-Image.git <br>
+> cd OCSInventory-Docker-Image <br>
 
 
 *The following command uses the **default values**.*
@@ -62,8 +62,8 @@ Clone this repository :
 
 Enter the directory you just clone, and run the setup.sh script
 
-> cd OCSInventory-Docker-Image
-> sudo bash setup.sh
+> cd OCSInventory-Docker-Image <br>
+> sudo bash setup.sh <br>
 
 Follow the steps, the script will do the work for you
 
@@ -71,11 +71,11 @@ Follow the steps, the script will do the work for you
 
 Use the following environmental variables to connect your MySQL Server.
 
-> OCS_DBNAME= *(Name of your database)*
-> OCS_DBSERVER_READ= *(Database Server)*
-> OCS_DBSERVER_WRITE=*(Database Server)*
-> OCS_DBUSER= *(User database)*
-> OCS_DBPASS= *(User password)*
+> OCS_DBNAME= *(Name of your database)* <br>
+> OCS_DBSERVER_READ= *(Database Server)* <br>
+> OCS_DBSERVER_WRITE=*(Database Server)* <br>
+> OCS_DBUSER= *(User database)* <br>
+> OCS_DBPASS= *(User password)* <br>
 
 ----------
 
@@ -107,18 +107,18 @@ Create a data directory on your host system:
 
 Start your OCSInventory container like this:
 
-> sudo docker run \
-> -p 80:80 \
-> --name myocsinventory \  
-> -v /my/own/datadir:/data/save/ocsinventory \
-> -e OCS_DBNAME=ocsweb \
-> -e OCS_DBSERVER_READ=localhost \
-> -e OCS_DBSERVER_WRITE=localhost \
-> -e OCS_DBUSER=ocs \
-> -e OCS_DBPASS=ocs \
-> -itd \   
-> ocsinventory/ocsinventory-docker-image:master \
-> bash
+> sudo docker run \ <br>
+> -p 80:80 \ <br>
+> --name myocsinventory \ <br>
+> -v /my/own/datadir:/data/save/ocsinventory \ <br>
+> -e OCS_DBNAME=ocsweb \ <br>
+> -e OCS_DBSERVER_READ=localhost \ <br>
+> -e OCS_DBSERVER_WRITE=localhost \ <br>
+> -e OCS_DBUSER=ocs \ <br>
+> -e OCS_DBPASS=ocs \ <br>
+> -itd \ <br>
+> ocsinventory/ocsinventory-docker-image:master \ <br>
+> bash <br>
 
 The  option -v /my/own/datadir:/data/save/ocsinventory mounts the /my/own/datadir directory from the host system as /data/save/ocsinventory inside the container.
 
@@ -132,20 +132,20 @@ Create a volume:
 
 Run your container:
 
-> sudo docker run \
-> -p 80:80 \
-> --name name-container \
-> -v ocsdata:/usr/share/ocsinventory-reports/ \
-> -v ocsdata:/etc/ocsinventory-reports/ \
-> -v ocsdata:/var/lib/ocsinventory-reports/ \
-> -e OCS_DBNAME=ocsweb \
-> -e OCS_DBSERVER_READ=localhost \
-> -e OCS_DBSERVER_WRITE=localhost \
-> -e OCS_DBUSER=ocs \
-> -e OCS_DBPASS=ocs \
-> -itd \   
-> ocsinventory/ocsinventory-docker-image:master \
-> bash
+> sudo docker run \ <br>
+> -p 80:80 \ <br>
+> --name name-container \ <br>
+> -v ocsdata:/usr/share/ocsinventory-reports/ \ <br>
+> -v ocsdata:/etc/ocsinventory-reports/ \ <br>
+> -v ocsdata:/var/lib/ocsinventory-reports/ \ <br>
+> -e OCS_DBNAME=ocsweb \ <br>
+> -e OCS_DBSERVER_READ=localhost \ <br>
+> -e OCS_DBSERVER_WRITE=localhost \ <br>
+> -e OCS_DBUSER=ocs \ <br>
+> -e OCS_DBPASS=ocs \ <br>
+> -itd \ <br>
+> ocsinventory/ocsinventory-docker-image:master \ <br>
+> bash <br>
 
 It is advisable to keep the directories mentioned in the example:
 
@@ -157,12 +157,12 @@ They contain the necessary information for a proper server and web interface fun
 
 ## Contributing
 
-Fork it!
-Create your feature branch: git checkout -b my-new-feature
-Add your changes: git add folder/file1.php
-Commit your changes: git commit -m 'Add some feature'
-Push to the branch: git push origin my-new-feature
-Submit a pull request !
+1. Fork it!
+2. Create your feature branch: git checkout -b my-new-feature
+3. Add your changes: git add folder/file1.php
+4. Commit your changes: git commit -m 'Add some feature'
+5. Push to the branch: git push origin my-new-feature
+6. Submit a pull request !
 
 
 ## License
