@@ -107,6 +107,9 @@ RUN chmod +x /root/run.sh
 RUN ln -s /etc/apache2/conf-available/ocsinventory-reports.conf /etc/apache2/conf-enabled/ocsinventory-reports.conf
 RUN ln -s /etc/apache2/conf-available/z-ocsinventory-server.conf /etc/apache2/conf-enabled/z-ocsinventory-server.conf
 
+RUN rm /usr/share/ocsinventory-reports/ocsreports/install.php ;\
+    rm -rf /tmp/ocs
+
 EXPOSE 80
 EXPOSE 443
 
