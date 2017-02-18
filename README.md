@@ -149,9 +149,9 @@ Run your container:
 
 It is advisable to keep the directories mentioned in the example:
 
-> /var/lib/ocsinventory-reports/
-> /etc/ocsinventory-reports/
-> /usr/share/ocsinventory-reports/ocsreports/
+> /var/lib/ocsinventory-reports/ <br>
+> /etc/ocsinventory-reports/ <br>
+> /usr/share/ocsinventory-reports/ocsreports/ <br>
 
 They contain the necessary information for a proper server and web interface functioning
 
