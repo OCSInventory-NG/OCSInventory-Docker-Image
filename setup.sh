@@ -75,7 +75,7 @@ sed -i -e "s/PerlSetVar OCS_DB_PWD ocs/PerlSetVar OCS_DB_PWD ${databasePassword}
 
 COMMAND="docker run -p 80:80 --name ${containerName} -e OCS_DBNAME=${databaseName} \
 -e OCS_DBSERVER_READ=${databaseServerRead} -e OCS_DBSERVER_WRITE=${databaseServerWrite} \
--e OCS_DBUSER=${databaseUser} -e OCS_DBPASS=${databasePassword} ${VOLUME_ARGS} -itd palle/ocsinventory-image"
+-e OCS_DBUSER=${databaseUser} -e OCS_DBPASS=${databasePassword} ${VOLUME_ARGS} -itd ocsinventory/ocsinventory-docker-image"
 
 echo "========================================="
 echo ""
