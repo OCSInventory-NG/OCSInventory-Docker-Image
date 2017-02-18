@@ -65,11 +65,11 @@ fi
 
 BASEPATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 #MODIFY APACHE CONFIGURATION
-sed -i -e "s/PerlSetEnv OCS_DB_HOST localhost/PerlSetEnv OCS_DB_HOST ${databaseServerWrite}/g" $BASEPATH/conf/z-ocsinventory-server.conf
-sed -i -e "s/PerlSetEnv OCS_DB_NAME ocsweb/PerlSetEnv OCS_DB_NAME ${databaseName}/g" $BASEPATH/conf/z-ocsinventory-server.conf
-sed -i -e "s/PerlSetEnv OCS_DB_LOCAL ocsweb/PerlSetEnv OCS_DB_LOCAL ${databaseName}/g" $BASEPATH/conf/z-ocsinventory-server.conf
-sed -i -e "s/PerlSetEnv OCS_DB_USER ocs/PerlSetEnv OCS_DB_USER ${databaseUser}/g" $BASEPATH/conf/z-ocsinventory-server.conf
-sed -i -e "s/PerlSetVar OCS_DB_PWD ocs/PerlSetVar OCS_DB_PWD ${databasePassword}/g" $BASEPATH/conf/z-ocsinventory-server.conf
+#sed -i -e "s/PerlSetEnv OCS_DB_HOST localhost/PerlSetEnv OCS_DB_HOST ${databaseServerWrite}/g" $BASEPATH/conf/z-ocsinventory-server.conf
+#sed -i -e "s/PerlSetEnv OCS_DB_NAME ocsweb/PerlSetEnv OCS_DB_NAME ${databaseName}/g" $BASEPATH/conf/z-ocsinventory-server.conf
+#sed -i -e "s/PerlSetEnv OCS_DB_LOCAL ocsweb/PerlSetEnv OCS_DB_LOCAL ${databaseName}/g" $BASEPATH/conf/z-ocsinventory-server.conf
+#sed -i -e "s/PerlSetEnv OCS_DB_USER ocs/PerlSetEnv OCS_DB_USER ${databaseUser}/g" $BASEPATH/conf/z-ocsinventory-server.conf
+#sed -i -e "s/PerlSetVar OCS_DB_PWD ocs/PerlSetVar OCS_DB_PWD ${databasePassword}/g" $BASEPATH/conf/z-ocsinventory-server.conf
 
 
 
