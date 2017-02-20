@@ -12,6 +12,7 @@ RUN apt-get -y install \
     php5-gd \
     php5-mysql \
     php5-cgi \
+    php5-curl \ 
     perl \
     build-essential \
     libapache2-mod-php5 \
