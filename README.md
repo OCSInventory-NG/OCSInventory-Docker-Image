@@ -2,9 +2,9 @@
 
 ## Some Links
   - [ASK question](http://ask.ocsinventory-ng.org")
-  - [Website](http://www.ocsinventory-ng.org/?utm_source=github-ocs)
+  - [Website](https://www.ocsinventory-ng.org/?utm_source=github-ocs)
   - [Github](https://github.com/OCSInventory-NG)
-  - [Support](https://www.factorfx.com/ocs-en)
+  - [OCS Professional](https://www.ocsinventory-ng.org/en/#ocs-pro-en)
 
 
 
