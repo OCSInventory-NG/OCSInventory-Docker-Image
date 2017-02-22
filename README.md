@@ -1,7 +1,7 @@
 ![Logo-OCS](http://cdn.ocsinventory-ng.org/common/banners/banner300px.png)
 
 ## Some Links
-  - [ASK question](http://ask.ocsinventory-ng.org")
+  - [ASK question](https://ask.ocsinventory-ng.org)
   - [Website](https://www.ocsinventory-ng.org/?utm_source=github-ocs)
   - [Github](https://github.com/OCSInventory-NG)
   - [OCS Professional](https://www.ocsinventory-ng.org/en/#ocs-pro-en)
