@@ -87,7 +87,7 @@ RUN bash -c 'mkdir -p /var/lib/ocsinventory-reports/{download,ipd,logs,scripts,s
 RUN chmod -R +w /var/lib/ocsinventory-reports ;\
     chown www-data: -R /var/lib/ocsinventory-reports
 
-ADD dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/
+ADD ../dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/
 
 RUN cp binutils/ipdiscover-util.pl /usr/share/ocsinventory-reports/ocsreports/ipdiscover-util.pl
 
@@ -97,11 +97,11 @@ RUN chown www-data: /usr/share/ocsinventory-reports/ocsreports/ipdiscover-util.p
     mkdir -p /var/log/ocsinventory-server/ ;\
     chmod +w /var/log/ocsinventory-server/
 
-ADD /conf/ocsinventory-reports.conf /etc/apache2/conf-available/
-ADD /conf/z-ocsinventory-server.conf /etc/apache2/conf-available/
+ADD ../conf/ocsinventory-reports.conf /etc/apache2/conf-available/
+ADD ../conf/z-ocsinventory-server.conf /etc/apache2/conf-available/
 
 
-ADD ./scripts/run.sh /root/run.sh
+ADD ../scripts/run.sh /root/run.sh
 RUN chmod +x /root/run.sh
 
 
