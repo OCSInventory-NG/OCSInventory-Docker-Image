@@ -54,7 +54,7 @@ Clone this repository :
 > -e OCS_DBUSER=ocs \   
 > -e OCS_DBPASS=ocs \   
 > -itd \   
-> ocsinventory/ocsinventory-docker-image:latest \
+> ocsinventory/ocsinventory-docker-image:latest \ <br>
 > bash
 
 ----------
