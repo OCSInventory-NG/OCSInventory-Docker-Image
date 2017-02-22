@@ -54,7 +54,7 @@ Clone this repository :
 > -e OCS_DBUSER=ocs \   
 > -e OCS_DBPASS=ocs \   
 > -itd \   
-> ocsinventory/ocsinventory-docker-image:master \
+> ocsinventory/ocsinventory-docker-image:latest \
 > bash
 
 ----------
@@ -117,7 +117,7 @@ Start your OCSInventory container like this:
 > -e OCS_DBUSER=ocs \ <br>
 > -e OCS_DBPASS=ocs \ <br>
 > -itd \ <br>
-> ocsinventory/ocsinventory-docker-image:master \ <br>
+> ocsinventory/ocsinventory-docker-image:latest \ <br>
 > bash <br>
 
 The  option -v /my/own/datadir:/data/save/ocsinventory mounts the /my/own/datadir directory from the host system as /data/save/ocsinventory inside the container.
@@ -144,7 +144,7 @@ Run your container:
 > -e OCS_DBUSER=ocs \ <br>
 > -e OCS_DBPASS=ocs \ <br>
 > -itd \ <br>
-> ocsinventory/ocsinventory-docker-image:master \ <br>
+> ocsinventory/ocsinventory-docker-image:latest \ <br>
 > bash <br>
 
 It is advisable to keep the directories mentioned in the example:
