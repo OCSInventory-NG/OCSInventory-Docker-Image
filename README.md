@@ -163,4 +163,4 @@ They contain the necessary information for a proper server and web interface fun
 
 ## License
 
-OCS Inventory Docker Stack is GPLv3 licensed
+OCS Inventory Docker Image is GPLv3 licensed
