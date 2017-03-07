@@ -35,14 +35,16 @@ RUN apt-get -y install \
     libphp-pclzip \
     libsoap-lite-perl \
     libarchive-zip-perl \
-    htop \
     git \
     wget \
     tar \
     unzip \
     nano \
     make
+    
+RUN mkdir /usr/include/apache2
 
+RUN cpan -i Apache2::SOAP
 RUN cpan -i XML::Entities
 VOLUME /var/lib/mysql
 
