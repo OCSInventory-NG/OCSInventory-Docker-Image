@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:jessie-slim
 
 LABEL maintainer="contact@ocsinventory-ng.org"
 LABEL version="2.3.1"
@@ -35,12 +35,8 @@ RUN apt-get -y install \
     libphp-pclzip \
     libsoap-lite-perl \
     libarchive-zip-perl \
-    htop \
-    git \
     wget \
     tar \
-    unzip \
-    nano \
     make
 
 RUN cpan -i XML::Entities
@@ -110,7 +106,11 @@ RUN ln -s /etc/apache2/conf-available/ocsinventory-reports.conf /etc/apache2/con
 RUN ln -s /etc/apache2/conf-available/z-ocsinventory-server.conf /etc/apache2/conf-enabled/z-ocsinventory-server.conf
 
 RUN rm /usr/share/ocsinventory-reports/ocsreports/install.php ;\
-    rm -rf /tmp/ocs
+    rm -rf /tmp/ocs ;\
+    apt-get clean ;\
+    apt-get autoclean ;\
+    apt-get autoremove ;\
+    rm -rf /var/cache/apt/archives/* ;
 
 EXPOSE 80
 EXPOSE 443
