@@ -54,7 +54,7 @@ RUN /usr/sbin/a2dissite 000-default ;\
     /usr/sbin/a2enmod authz_user
 
 RUN wget https://raw.githubusercontent.com/OCSInventory-NG/OCSInventory-Server/master/binutils/docker-download.sh
-RUN sh docker-download.sh
+RUN sh docker-download.sh 2.3
 
 WORKDIR /tmp/ocs/Apache
 RUN perl Makefile.PL ;\
