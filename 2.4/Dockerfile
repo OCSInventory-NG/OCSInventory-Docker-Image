@@ -86,14 +86,14 @@ RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports ;\
     chmod +w /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php ;\
     mkdir -p /var/log/ocsinventory-server/ ;\
     chmod +w /var/log/ocsinventory-server ;\
-    chown -R www-data: /var/log/ocsinventory-server ;\
+    chown -R www-data:root /var/log/ocsinventory-server ;\
     chown -R www-data: /usr/share/ocsinventory-reports/
 
 COPY dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/
 COPY /conf/ocsinventory-reports.conf /conf/z-ocsinventory-server.conf /etc/apache2/conf-available/
 COPY ./scripts/run.sh /root/run.sh
 
-RUN chown -R www-data: /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php
+RUN chown -R www-data: /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php ;\
     chmod +x /root/run.sh ;\
     ln -s /etc/apache2/conf-available/ocsinventory-reports.conf /etc/apache2/conf-enabled/ocsinventory-reports.conf ;\
     ln -s /etc/apache2/conf-available/z-ocsinventory-server.conf /etc/apache2/conf-enabled/z-ocsinventory-server.conf ;\
