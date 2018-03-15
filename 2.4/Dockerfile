@@ -1,7 +1,7 @@
 FROM debian:jessie-slim
 
 LABEL maintainer="contact@ocsinventory-ng.org"
-LABEL version="2.3.1"
+LABEL version="2.4"
 LABEL description="OCS (Open Computers and Software Inventory Next Generation)"
 
 ARG APT_FLAGS="-y --no-install-recommends"
@@ -47,8 +47,8 @@ RUN apt-get update ; \
     /usr/sbin/a2enmod rewrite ;\
     /usr/sbin/a2enmod ssl ;\
     /usr/sbin/a2enmod authz_user ;\
-    wget https://raw.githubusercontent.com/OCSInventory-NG/OCSInventory-Server/master/binutils/docker-download.sh ;\
-    sh docker-download.sh 2.3.1
+    wget https://raw.githubusercontent.com/mmasquelin/OCSInventory-Server/docker-download-fix/binutils/docker-download.sh ;\
+    sh docker-download.sh 2.4
 
 WORKDIR /tmp/ocs/Apache
 RUN perl Makefile.PL ;\
