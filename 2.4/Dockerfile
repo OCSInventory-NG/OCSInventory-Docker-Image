@@ -1,4 +1,4 @@
-FROM debian:jessie-slim
+FROM debian:stretch-slim
 
 LABEL maintainer="contact@ocsinventory-ng.org"
 LABEL version="2.4"
@@ -13,14 +13,15 @@ RUN apt-get update ; \
     apache2 \
     apache2-doc \
     apt-utils \
-    php5 \
-    php5-gd \
-    php5-mysql \
-    php5-cgi \
-    php5-curl \
+    php7.0 \
+    php7.0-gd \
+    php7.0-mysql \
+    php7.0-cgi \
+    php7.0-curl \
+    php7.0-xml \
     perl \
     build-essential \
-    libapache2-mod-php5 \
+    libapache2-mod-php7.0 \
     libxml2 \
     libxml-simple-perl \
     libc6-dev \
@@ -35,10 +36,12 @@ RUN apt-get update ; \
     libsoap-lite-perl \
     libarchive-zip-perl \
     libnet-ip-perl \
-    libphp-pclzip \
+    php-mbstring \
+    php-pclzip \
     libsoap-lite-perl \
     libarchive-zip-perl \
     libmodule-build-perl \
+    nano \
     wget \
     tar \
     make ;\
@@ -55,8 +58,8 @@ RUN perl Makefile.PL ;\
     make ;\
     make install ;\
     cp /usr/share/zoneinfo/Europe/Paris /etc/localtime ;\
-    cp -R blib/lib/Apache /usr/local/share/perl/5.20.2/ ;\
-    cp -R Ocsinventory /usr/local/share/perl/5.20.2/ ;\
+    cp -R blib/lib/Apache /usr/local/share/perl/5.24.1/ ;\
+    cp -R Ocsinventory /usr/local/share/perl/5.24.1/ ;\
     cp /tmp/ocs/etc/logrotate.d/ocsinventory-server /etc/logrotate.d/ ;\
     mkdir -p /etc/ocsinventory-server/plugins ;\
     mkdir -p /etc/ocsinventory-server/perl ;\
@@ -73,8 +76,6 @@ ENV APACHE_LOG_DIR      /var/log/apache2
 
 WORKDIR /tmp/ocs
 
-COPY dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/
-
 RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports ;\
     bash -c 'mkdir -p /var/lib/ocsinventory-reports/{download,ipd,logs,scripts,snmp}' ;\
     chmod -R +w /var/lib/ocsinventory-reports ;\
@@ -85,12 +86,15 @@ RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports ;\
     chmod +w /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php ;\
     mkdir -p /var/log/ocsinventory-server/ ;\
     chmod +w /var/log/ocsinventory-server ;\
+    chown -R www-data: /var/log/ocsinventory-server ;\
     chown -R www-data: /usr/share/ocsinventory-reports/
 
+COPY dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/
 COPY /conf/ocsinventory-reports.conf /conf/z-ocsinventory-server.conf /etc/apache2/conf-available/
 COPY ./scripts/run.sh /root/run.sh
 
-RUN chmod +x /root/run.sh ;\
+RUN chown -R www-data: /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php
+    chmod +x /root/run.sh ;\
     ln -s /etc/apache2/conf-available/ocsinventory-reports.conf /etc/apache2/conf-enabled/ocsinventory-reports.conf ;\
     ln -s /etc/apache2/conf-available/z-ocsinventory-server.conf /etc/apache2/conf-enabled/z-ocsinventory-server.conf ;\
     rm /usr/share/ocsinventory-reports/ocsreports/install.php ;\
