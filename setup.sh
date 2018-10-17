@@ -75,7 +75,7 @@ BASEPATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
 COMMAND="docker run -p 80:80 --name ${containerName} -e OCS_DBNAME=${databaseName} \
 -e OCS_DBSERVER_READ=${databaseServerRead} -e OCS_DBSERVER_WRITE=${databaseServerWrite} \
--e OCS_DBUSER=${databaseUser} -e OCS_DBPASS=${databasePassword} ${VOLUME_ARGS} -itd ocsinventory/ocsinventory-docker-image:master"
+-e OCS_DBUSER=${databaseUser} -e OCS_DBPASS=${databasePassword} ${VOLUME_ARGS} -itd ocsinventory/ocsinventory-docker-image:latest"
 
 echo "========================================="
 echo ""
@@ -91,11 +91,5 @@ read launchNow
 
 if [ $launchNow = "yes" ]
 then
-    $(${COMMAND})
+    ${COMMAND}
 fi
-
-
-
-
-
-
