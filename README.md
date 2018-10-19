@@ -35,9 +35,10 @@ OCS Inventory NG includes the packet deployment functionality to be sure that al
 Starting a **OCSInventory container** is simple:
 Clone this repository :
 
-> sudo git clone https://github.com/OCSInventory-NG/OCSInventory-Docker-Image.git
-> cd OCSInventory-Docker-Image
-
+```bash
+sudo git clone https://github.com/OCSInventory-NG/OCSInventory-Docker-Image.git
+cd OCSInventory-Docker-Image
+```
 
 *The following command uses the **default values**.*
 
@@ -59,21 +60,23 @@ bash
 
 Enter the directory you just clone, and run the setup.sh script
 
-> cd OCSInventory-Docker-Image
-> sudo bash setup.sh
-
+```bash
+cd OCSInventory-Docker-Image
+sudo bash setup.sh
+```
 Follow the steps, the script will do the work for you
 
 ### Environmental variables options
 
 Use the following environmental variables to connect your MySQL Server.
 
-> OCS_DBNAME= *(Name of your database)*
-> OCS_DBSERVER_READ= *(Database Server)*
-> OCS_DBSERVER_WRITE=*(Database Server)*
-> OCS_DBUSER= *(User database)*
-> OCS_DBPASS= *(User password)*
-
+```bash
+OCS_DBNAME= *(Name of your database)*
+OCS_DBSERVER_READ= *(Database Server)*
+OCS_DBSERVER_WRITE=*(Database Server)*
+OCS_DBUSER= *(User database)*
+OCS_DBPASS= *(User password)*
+```
 ----------
 
 ### Using Docker container
@@ -86,12 +89,14 @@ If you want to run your OCSInventory within a MYSQL docker container, simply sta
 
 The docker exec command allows you to run commands inside a Docker container. The following command line will give you a bash shell inside your OCSInventory container:
 
-> sudo docker exec -it yourcontainerOCSInventory bash
-
+```bash
+sudo docker exec -it yourcontainerOCSInventory bash
+```
 You can access to the container logs through the following Docker command:
 
-> sudo docker logs yourcontainerOCSInventory
-
+```bash
+sudo docker logs yourcontainerOCSInventory
+```
 ----------
 
 ### Create a volume back up from the docker's host
@@ -100,8 +105,9 @@ The Docker documentation is a good starting point for understanding the differen
 
 Create a data directory on your host system:
 
-> mkdir /my/own/datadir
-
+```bash
+mkdir /my/own/datadir
+```
 Start your OCSInventory container like this:
 
 ```bash
@@ -127,8 +133,9 @@ The  option -v /my/own/datadir:/data/save/ocsinventory mounts the /my/own/datadi
 
 Create a volume:
 
-> docker volume create ocsdata
-
+```bash
+docker volume create ocsdata
+```
 Run your container:
 
 ```bash
@@ -150,10 +157,11 @@ bash
 
 It is advisable to keep the directories mentioned in the example:
 
-> /var/lib/ocsinventory-reports/ <br>
-> /etc/ocsinventory-reports/ <br>
-> /usr/share/ocsinventory-reports/ocsreports/ <br>
-
+```
+/var/lib/ocsinventory-reports/
+/etc/ocsinventory-reports/
+/usr/share/ocsinventory-reports/ocsreports/
+```
 They contain the necessary information for a proper server and web interface functioning
 
 ## Contributing
