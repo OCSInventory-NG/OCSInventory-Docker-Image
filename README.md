@@ -41,18 +41,19 @@ Clone this repository :
 
 *The following command uses the **default values**.*
 
-> sudo docker run \
-> -p 80:80 \
-> --name myocsinventory \
-> -e OCS_DBNAME=ocsweb \
-> -e OCS_DBSERVER_READ=localhost \
-> -e OCS_DBSERVER_WRITE=localhost \
-> -e OCS_DBUSER=ocs \
-> -e OCS_DBPASS=ocs \
-> -itd \
-> ocsinventory/ocsinventory-docker-image:latest \
-> bash
-
+```bash
+sudo docker run \
+-p 80:80 \
+--name myocsinventory \
+-e OCS_DBNAME=ocsweb \
+-e OCS_DBSERVER_READ=localhost \
+-e OCS_DBSERVER_WRITE=localhost \
+-e OCS_DBUSER=ocs \
+-e OCS_DBPASS=ocs \
+-itd \
+ocsinventory/ocsinventory-docker-image:latest \
+bash
+```
 ----------
 ### Use setup.sh to start you OCSInventory container
 
@@ -103,18 +104,20 @@ Create a data directory on your host system:
 
 Start your OCSInventory container like this:
 
-> sudo docker run \
-> -p 80:80 \
-> --name myocsinventory \
-> -v /my/own/datadir:/data/save/ocsinventory \
-> -e OCS_DBNAME=ocsweb \
-> -e OCS_DBSERVER_READ=localhost \
-> -e OCS_DBSERVER_WRITE=localhost \
-> -e OCS_DBUSER=ocs \
-> -e OCS_DBPASS=ocs \
-> -itd \
-> ocsinventory/ocsinventory-docker-image:latest \
-> bash
+```bash
+sudo docker run \
+-p 80:80 \
+--name myocsinventory \
+-v /my/own/datadir:/data/save/ocsinventory \
+-e OCS_DBNAME=ocsweb \
+-e OCS_DBSERVER_READ=localhost \
+-e OCS_DBSERVER_WRITE=localhost \
+-e OCS_DBUSER=ocs \
+-e OCS_DBPASS=ocs \
+-itd \
+ocsinventory/ocsinventory-docker-image:latest \
+bash
+```
 
 The  option -v /my/own/datadir:/data/save/ocsinventory mounts the /my/own/datadir directory from the host system as /data/save/ocsinventory inside the container.
 
@@ -128,20 +131,22 @@ Create a volume:
 
 Run your container:
 
-> sudo docker run \
-> -p 80:80 \
-> --name name-container \
-> -v ocsdata:/usr/share/ocsinventory-reports/ \
-> -v ocsdata:/etc/ocsinventory-reports/ \
-> -v ocsdata:/var/lib/ocsinventory-reports/ \
-> -e OCS_DBNAME=ocsweb \
-> -e OCS_DBSERVER_READ=localhost \
-> -e OCS_DBSERVER_WRITE=localhost \
-> -e OCS_DBUSER=ocs \
-> -e OCS_DBPASS=ocs \
-> -itd \
-> ocsinventory/ocsinventory-docker-image:latest \
-> bash
+```bash
+sudo docker run \
+ -p 80:80 \
+--name name-container \
+-v ocsdata:/usr/share/ocsinventory-reports/ \
+-v ocsdata:/etc/ocsinventory-reports/ \
+-v ocsdata:/var/lib/ocsinventory-reports/ \
+-e OCS_DBNAME=ocsweb \
+-e OCS_DBSERVER_READ=localhost \
+-e OCS_DBSERVER_WRITE=localhost \
+-e OCS_DBUSER=ocs \
+-e OCS_DBPASS=ocs \
+-itd \
+ocsinventory/ocsinventory-docker-image:latest \
+bash
+```
 
 It is advisable to keep the directories mentioned in the example:
 
