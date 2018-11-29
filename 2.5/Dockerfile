@@ -20,6 +20,7 @@ RUN apt-get update ; \
     php7.0-curl \
     php7.0-xml \
     php7.0-soap \
+    php7.0-zip \
     perl \
     build-essential \
     libapache2-mod-php7.0 \
