@@ -49,8 +49,6 @@ sudo docker run \
 -e OCS_DBNAME=ocsweb \
 -e OCS_DBSERVER_READ=localhost \
 -e OCS_DBSERVER_WRITE=localhost \
--e OCS_DBSERVER_READ_PORT=3306 \
--e OCS_DBSERVER_WRITE_PORT=3306 \
 -e OCS_DBUSER=ocs \
 -e OCS_DBPASS=ocs \
 -itd \
@@ -76,10 +74,11 @@ Use the following environmental variables to connect your MySQL Server.
 OCS_DBNAME= *(Name of your database)*
 OCS_DBSERVER_READ= *(Database Server)*
 OCS_DBSERVER_WRITE=*(Database Server)*
-OCS_DBSERVER_READ_PORT=*(Database Server Port)*
+OCS_DBSERVER_READ_PORT=	*(Database Server Port)*
 OCS_DBSERVER_WRITE_PORT=*(Database Server Port)*
 OCS_DBUSER= *(User database)*
 OCS_DBPASS= *(User password)*
+TZ= *(TIMEZONE)*
 ```
 ----------
 
@@ -122,8 +121,6 @@ sudo docker run \
 -e OCS_DBNAME=ocsweb \
 -e OCS_DBSERVER_READ=localhost \
 -e OCS_DBSERVER_WRITE=localhost \
--e OCS_DBSERVER_READ_PORT=3306 \
--e OCS_DBSERVER_WRITE_PORT=3306 \
 -e OCS_DBUSER=ocs \
 -e OCS_DBPASS=ocs \
 -itd \
@@ -154,8 +151,6 @@ sudo docker run \
 -e OCS_DBNAME=ocsweb \
 -e OCS_DBSERVER_READ=localhost \
 -e OCS_DBSERVER_WRITE=localhost \
--e OCS_DBSERVER_READ_PORT=3306 \
--e OCS_DBSERVER_WRITE_PORT=3306 \
 -e OCS_DBUSER=ocs \
 -e OCS_DBPASS=ocs \
 -itd \
