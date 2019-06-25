@@ -74,8 +74,11 @@ Use the following environmental variables to connect your MySQL Server.
 OCS_DBNAME= *(Name of your database)*
 OCS_DBSERVER_READ= *(Database Server)*
 OCS_DBSERVER_WRITE=*(Database Server)*
+OCS_DBSERVER_READ_PORT=	*(Database Server Port)*
+OCS_DBSERVER_WRITE_PORT=*(Database Server Port)*
 OCS_DBUSER= *(User database)*
 OCS_DBPASS= *(User password)*
+TZ= *(TIMEZONE)*
 ```
 ----------
 

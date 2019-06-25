@@ -54,12 +54,14 @@ RUN apt-get update ; \
     /usr/sbin/a2enmod authz_user ;\
     wget https://raw.githubusercontent.com/OCSInventory-NG/OCSInventory-Server/master/binutils/docker-download.sh ;\
     sh docker-download.sh 2.5
+	
+ENV TZ	"Europe/Paris"
 
 WORKDIR /tmp/ocs/Apache
 RUN perl Makefile.PL ;\
     make ;\
     make install ;\
-    cp /usr/share/zoneinfo/Europe/Paris /etc/localtime ;\
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone ;\
     cp -R blib/lib/Apache /usr/local/share/perl/5.28.0/ ;\
     cp -R Ocsinventory /usr/local/share/perl/5.28.0/ ;\
     cp /tmp/ocs/etc/logrotate.d/ocsinventory-server /etc/logrotate.d/ ;\
@@ -74,6 +76,8 @@ ENV APACHE_PID_FILE     /var/run/apache2.pid
 ENV APACHE_RUN_DIR      /var/run/apache2f
 ENV APACHE_LOCK_DIR     /var/lock/apache2
 ENV APACHE_LOG_DIR      /var/log/apache2
+ENV OCS_DBSERVER_READ_PORT	3306
+ENV OCS_DBSERVER_WRITE_PORT	3306
 
 WORKDIR /tmp/ocs
 
