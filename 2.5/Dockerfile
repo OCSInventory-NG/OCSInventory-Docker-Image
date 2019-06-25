@@ -5,6 +5,8 @@ LABEL version="2.5"
 LABEL description="OCS (Open Computers and Software Inventory Next Generation)"
 
 ARG APT_FLAGS="-y --no-install-recommends"
+ARG OCS_DBSERVER_READ_PORT
+ARG OCS_DBSERVER_WRITE_PORT
 
 VOLUME /var/lib/mysql
 
