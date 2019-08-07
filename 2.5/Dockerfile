@@ -89,7 +89,8 @@ RUN cp -R ocsreports/* /usr/share/ocsinventory-reports/ocsreports ;\
     chown www-data: /usr/share/ocsinventory-reports/ocsreports/ipdiscover-util.pl ;\
     chmod 755 /usr/share/ocsinventory-reports/ocsreports/ipdiscover-util.pl ;\
     mkdir -p /var/log/ocsinventory-server/ ;\
-    chmod +w /var/log/ocsinventory-server ;\
+    chmod +w /var/log/ocsinventory-server/ ;\
+    chown -R www-data: /var/log/ocsinventory-server ;\
     chown -R www-data: /usr/share/ocsinventory-reports/
 
 COPY ./dbconfig.inc.php /usr/share/ocsinventory-reports/ocsreports/dbconfig.inc.php
