@@ -58,6 +58,7 @@ RUN yum ${YUM_FLAGS} install wget \
     php73-php-pecl-apcu \
     php73-php-json \
     php73-php-fpm \
+    php73-php-soap \
     php73-php-opcache ;
 
 COPY conf/* /tmp/
