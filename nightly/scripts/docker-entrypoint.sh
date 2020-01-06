@@ -2,9 +2,9 @@
 
 # Move to temp and download OCS 
 cd /tmp 
-wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/2.6/OCSNG_UNIX_SERVER_2.6.tar.gz
-tar xzf OCSNG_UNIX_SERVER_2.6.tar.gz
-cd OCSNG_UNIX_SERVER_2.6
+wget http://download.ocsinventory-ng.org/nightly/latest.tar.gz
+tar xzf latest.tar.gz
+cd OCSNG_UNIX_SERVER
 
 # Create all directories
 mkdir -p $OCS_WEBCONSOLE_DIR
@@ -50,9 +50,9 @@ sed -i 's/PATH_TO_SNMP_DIR/'"${OCS_VARLIB_DIR//\//\\/}"'snmp/g' /etc/httpd/conf.
 
 # Generate dbconfig.inc.php
 cp /tmp/dbconfig.inc.php $OCS_WEBCONSOLE_DIR
-sed -i 's/OCS_DB_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
-sed -i 's/OCS_READ_NAME/'"$OCS_DB_NAME"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
-sed -i 's/OCS_WRITE_NAME/'"$OCS_DB_NAME"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
+sed -i 's/OCS_DB_NAME/'"$OCS_DB_NAME"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
+sed -i 's/OCS_READ_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
+sed -i 's/OCS_WRITE_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_DB_USER/'"$OCS_DB_USER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_DB_PASS/'"$OCS_DB_PASS"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 
