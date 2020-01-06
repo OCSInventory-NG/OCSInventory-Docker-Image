@@ -69,9 +69,6 @@ chown -R $APACHE_RUN_USER: $OCS_VARLIB_DIR
 chown -R $APACHE_RUN_USER: $OCS_LOG_DIR
 chown -R $APACHE_RUN_USER: $OCS_WEBCONSOLE_DIR
 
-# rm install.php
-rm $OCS_WEBCONSOLE_DIR/install.php
-
 # Remove temp files
 rm -rf /tmp/*
 
