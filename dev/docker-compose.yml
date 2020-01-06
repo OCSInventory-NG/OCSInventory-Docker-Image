@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  ocsapplication:
+    image: ocsinventory/ocsinventory-docker-image:dev
+    container_name : ocsinventory-server-dev
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "perlcomdata:/etc/ocsinventory-server"
+      - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports"
+      - "varlibdata:/var/lib/ocsinventory-reports"
+      - "httpdconfdata:/etc/httpd/conf.d"
+    environment:
+      OCS_DB_SERVER: ocsinventory-db-dev
+      OCS_DB_USER: ocsuser
+      OCS_DB_PASS: ocspass
+      OCS_DB_NAME: ocsweb
+    links:
+      - ocsdb
+    networks:
+      - localocs
+    depends_on:
+      - ocsdb    
+
+  ocsdb :
+    image : mysql:5.7
+    container_name : ocsinventory-db-dev
+    restart: always
+    ports :
+      - 3306:3306
+    volumes :
+      - ./sql/:/docker-entrypoint-initdb.d/
+      - sqldata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD : rootpass
+      MYSQL_USER : ocsuser
+      MYSQL_PASSWORD : ocspass
+      MYSQL_DATABASE : ocsweb
+    networks:
+      - localocs
+  
+networks:
+  localocs:
+
+volumes:
+  perlcomdata:
+  ocsreportsdata:
+  varlibdata:
+  httpdconfdata:
+  sqldata:
+  
