@@ -21,8 +21,8 @@
  * MA 02110-1301, USA.
  */
 define("DB_NAME", "OCS_DB_NAME");
-define("SERVER_READ", "OCS_DB_SERVER");
-define("SERVER_WRITE", "OCS_DB_SERVER");
+define("SERVER_READ", "OCS_READ_NAME");
+define("SERVER_WRITE", "OCS_WRITE_NAME");
 define("COMPTE_BASE", "OCS_DB_USER");
 define("PSWD_BASE", "OCS_DB_PASS");
 ?>
