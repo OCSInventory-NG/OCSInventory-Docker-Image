@@ -25,4 +25,9 @@ define("SERVER_READ", "OCS_READ_NAME");
 define("SERVER_WRITE", "OCS_WRITE_NAME");
 define("COMPTE_BASE", "OCS_DB_USER");
 define("PSWD_BASE", "OCS_DB_PASS");
+define("ENABLE_SSL","OCS_SSL_ENABLED");
+define("SSL_MODE","OCS_SSL_WEB_MODE");
+define("SSL_KEY","OCS_SSL_KEY");
+define("SSL_CERT","OCS_SSL_CERT");
+define("CA_CERT","OCS_SSL_CA");
 ?>
