@@ -20,6 +20,11 @@ services:
       OCS_DB_NAME: ocsweb
       # See documentation to set up SSL for MySQL
       OCS_SSL_ENABLED: 0
+      # Developpment variables 
+      SERVER_REPOSITORY_GIT_URL: https://github.com/OCSInventory-NG/OCSInventory-Server
+      SERVER_REPOSITORY_BRANCH: master
+      OCSREPORTS_REPOSITORY_GIT_URL: https://github.com/OCSInventory-NG/OCSInventory-ocsreports
+      OCSREPORTS_REPOSITORY_BRANCH: master
     links:
       - ocsdb
     networks:
