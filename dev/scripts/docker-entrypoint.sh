@@ -46,7 +46,7 @@ sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' /etc/httpd/conf.d/z-ocsinventory-s
 sed -i 's/"PATH_TO_LOG_DIRECTORY"/'"${OCS_LOG_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/"PATH_TO_PLUGINS_PERL_DIRECTORY"/'"${OCS_PERLEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/"PATH_TO_PLUGINS_CONFIG_DIRECTORY"/'"${OCS_PLUGINSEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
+sed -i 's/OCS_SSL_WEB_MODE/'"$OCS_SSL_ENABLED"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/OCS_SSL_KEY/'"$OCS_SSL_KEY"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/OCS_SSL_CERT/'"$OCS_SSL_CERT"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/OCS_SSL_CA/'"$OCS_SSL_CA"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
