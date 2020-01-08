@@ -46,6 +46,11 @@ sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' /etc/httpd/conf.d/z-ocsinventory-s
 sed -i 's/"PATH_TO_LOG_DIRECTORY"/'"${OCS_LOG_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/"PATH_TO_PLUGINS_PERL_DIRECTORY"/'"${OCS_PERLEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/"PATH_TO_PLUGINS_CONFIG_DIRECTORY"/'"${OCS_PLUGINSEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
+sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
+sed -i 's/OCS_SSL_KEY/'"$OCS_SSL_KEY"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
+sed -i 's/OCS_SSL_CERT/'"$OCS_SSL_CERT"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
+sed -i 's/OCS_SSL_CA/'"$OCS_SSL_CA"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
+sed -i 's/OCS_SSL_COM_MODE/'"$OCS_SSL_COM_MODE"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 
 # Configure ocsinventory-reports file 
 cp /tmp/ocsinventory-reports.conf /etc/httpd/conf.d/ocsinventory-reports.conf
@@ -63,6 +68,11 @@ sed -i 's/OCS_READ_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.p
 sed -i 's/OCS_WRITE_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_DB_USER/'"$OCS_DB_USER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_DB_PASS/'"$OCS_DB_PASS"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
+sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
+sed -i 's/SSL_MODE/'"$OCS_SSL_WEB_MODE"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
+sed -i 's/OCS_SSL_KEY/'"$OCS_SSL_KEY"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
+sed -i 's/OCS_SSL_CERT/'"$OCS_SSL_CERT"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
+sed -i 's/OCS_SSL_CA/'"$OCS_SSL_CA"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 
 # Permissions
 chown -R $APACHE_RUN_USER: $OCS_VARLIB_DIR
