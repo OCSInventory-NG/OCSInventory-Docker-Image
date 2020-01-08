@@ -18,6 +18,8 @@ services:
       OCS_DB_USER: ocsuser
       OCS_DB_PASS: ocspass
       OCS_DB_NAME: ocsweb
+      # See documentation to set up SSL for MySQL
+      OCS_SSL_ENABLED: 0
     links:
       - ocsdb
     networks:
