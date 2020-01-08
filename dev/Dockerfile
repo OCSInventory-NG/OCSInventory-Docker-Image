@@ -13,7 +13,7 @@ ENV APACHE_RUN_USER=apache APACHE_RUN_GROUP=apache \
     OCS_DB_SERVER=dbsrv OCS_DB_PORT=3306 OCS_DB_USER=ocs OCS_DB_PASS=ocs OCS_DB_NAME=ocsweb \
     OCS_LOG_DIR=/var/log/ocsinventory-server OCS_VARLIB_DIR=/var/lib/ocsinventory-reports/ OCS_WEBCONSOLE_DIR=/usr/share/ocsinventory-reports/ocsreports/ \
     OCS_PERLEXT_DIR=/etc/ocsinventory-server/perl/ OCS_PLUGINSEXT_DIR=/etc/ocsinventory-server/plugins/ \
-    OCS_SSL_ENABLED=1 OCS_SSL_WEB_MODE= OCS_SSL_COM_MODE= OCS_SSL_KEY= OCS_SSL_CERT= OCS_SSL_CA= \
+    OCS_SSL_ENABLED=0 OCS_SSL_WEB_MODE= OCS_SSL_COM_MODE= OCS_SSL_KEY= OCS_SSL_CERT= OCS_SSL_CA= \
     TZ=Europe/Paris
 
 WORKDIR /tmp
