@@ -28,7 +28,7 @@ cd ..
 cp -R ocsreports/* $OCS_WEBCONSOLE_DIR
 
 # Configure z-ocsinventory-server file 
-cp /tmp/ocsinventory-server.conf /etc/httpd/conf.d/z-ocsinventory-server.conf
+cp /tmp/conf/ocsinventory-server.conf /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/VERSION_MP/2/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
@@ -45,7 +45,7 @@ sed -i 's/OCS_SSL_CA/'"${OCS_SSL_CA//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinvento
 sed -i 's/OCS_SSL_COM_MODE/'"$OCS_SSL_COM_MODE"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 
 # Configure ocsinventory-reports file 
-cp /tmp/ocsinventory-reports.conf /etc/httpd/conf.d/ocsinventory-reports.conf
+cp /tmp/conf/ocsinventory-reports.conf /etc/httpd/conf.d/ocsinventory-reports.conf
 sed -i 's/OCSREPORTS_ALIAS/\/ocsreports/g' /etc/httpd/conf.d/ocsinventory-reports.conf
 sed -i 's/PATH_TO_OCSREPORTS_DIR/'"${OCS_WEBCONSOLE_DIR//\//\\/}"'/g' /etc/httpd/conf.d/ocsinventory-reports.conf
 sed -i 's/PACKAGES_ALIAS/\/download/g' /etc/httpd/conf.d/ocsinventory-reports.conf
@@ -54,7 +54,7 @@ sed -i 's/SNMP_ALIAS/\/snmp/g' /etc/httpd/conf.d/ocsinventory-reports.conf
 sed -i 's/PATH_TO_SNMP_DIR/'"${OCS_VARLIB_DIR//\//\\/}"'snmp/g' /etc/httpd/conf.d/ocsinventory-reports.conf
 
 # Generate dbconfig.inc.php
-cp /tmp/dbconfig.inc.php $OCS_WEBCONSOLE_DIR
+cp /tmp/conf/dbconfig.inc.php $OCS_WEBCONSOLE_DIR
 sed -i 's/OCS_DB_NAME/'"$OCS_DB_NAME"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_READ_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_WRITE_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
@@ -76,7 +76,9 @@ chown -R $APACHE_RUN_USER: $OCS_WEBCONSOLE_DIR
 rm $OCS_WEBCONSOLE_DIR/install.php
 
 # Remove temp files
-rm -rf /tmp/*
+cd /tmp
+shopt -s extglob
+rm -rf -v !("conf")
 
 # Apache start
 if [ ! -d "$APACHE_RUN_DIR" ]; then
