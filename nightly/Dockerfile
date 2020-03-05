@@ -62,7 +62,7 @@ RUN yum ${YUM_FLAGS} install wget \
     php73-php-soap \
     php73-php-opcache ;
 
-COPY conf/* /tmp/
+COPY conf/* /tmp/conf
 COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
 EXPOSE 80 443
