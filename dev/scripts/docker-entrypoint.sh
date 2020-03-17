@@ -66,6 +66,7 @@ cp /tmp/dbconfig.inc.php $OCS_WEBCONSOLE_DIR
 sed -i 's/OCS_DB_NAME/'"$OCS_DB_NAME"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_READ_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_WRITE_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
+sed -i 's/OCS_DB_PORT/'"$OCS_DB_PORT"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_DB_USER/'"$OCS_DB_USER"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_DB_PASS/'"$OCS_DB_PASS"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
 sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' $OCS_WEBCONSOLE_DIR/dbconfig.inc.php
