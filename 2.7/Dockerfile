@@ -1,7 +1,7 @@
 FROM centos:centos7
 
 LABEL maintainer="contact@ocsinventory-ng.org" \
-      version="nightly" \
+      version="2.7" \
       description="OCS Inventory docker image"
 
 ARG YUM_FLAGS="-y"
