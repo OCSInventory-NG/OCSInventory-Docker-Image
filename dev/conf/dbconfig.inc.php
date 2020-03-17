@@ -23,6 +23,7 @@
 define("DB_NAME", "OCS_DB_NAME");
 define("SERVER_READ", "OCS_READ_NAME");
 define("SERVER_WRITE", "OCS_WRITE_NAME");
+define("SERVER_PORT", "OCS_DB_PORT");
 define("COMPTE_BASE", "OCS_DB_USER");
 define("PSWD_BASE", "OCS_DB_PASS");
 define("ENABLE_SSL","OCS_SSL_ENABLED");
