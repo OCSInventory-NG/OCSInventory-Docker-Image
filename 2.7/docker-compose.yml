@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ocsapplication:
-    image: ocsinventory/ocsinventory-docker-image:2.7
+    image: ocsinventory/ocsinventory-docker-image:latest
     container_name : ocsinventory-server
     restart: always
     ports:
