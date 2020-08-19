@@ -10,7 +10,7 @@ services:
       - 443:443
     volumes:
       - "perlcomdata:/etc/ocsinventory-server"
-      - "extensionsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
+      - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports"
       - "varlibdata:/var/lib/ocsinventory-reports"
       - "httpdconfdata:/etc/httpd/conf.d"
     environment:
@@ -49,7 +49,7 @@ networks:
 
 volumes:
   perlcomdata:
-  extensionsdata:
+  ocsreportsdata:
   varlibdata:
   httpdconfdata:
   sqldata:
