@@ -6,15 +6,15 @@ LABEL maintainer="contact@ocsinventory-ng.org" \
 
 ARG YUM_FLAGS="-y"
 
-VOLUME /var/lib/ocsinventory-reports /usr/share/ocsinventory-reports/ocsreports/extensions /etc/ocsinventory-server 
-
 ENV APACHE_RUN_USER=apache APACHE_RUN_GROUP=apache \
     APACHE_LOG_DIR=/var/log/httpd APACHE_PID_FILE=/var/run/httpd.pid APACHE_RUN_DIR=/var/run/httpd APACHE_LOCK_DIR=/var/lock/httpd \
     OCS_DB_SERVER=dbsrv OCS_DB_PORT=3306 OCS_DB_USER=ocs OCS_DB_PASS=ocs OCS_DB_NAME=ocsweb \
-    OCS_LOG_DIR=/var/log/ocsinventory-server OCS_VARLIB_DIR=/var/lib/ocsinventory-reports/ OCS_WEBCONSOLE_DIR=/usr/share/ocsinventory-reports/ocsreports/ \
+    OCS_LOG_DIR=/var/log/ocsinventory-server OCS_VARLIB_DIR=/var/lib/ocsinventory-reports/ OCS_WEBCONSOLE_DIR=/usr/share/ocsinventory-reports \
     OCS_PERLEXT_DIR=/etc/ocsinventory-server/perl/ OCS_PLUGINSEXT_DIR=/etc/ocsinventory-server/plugins/ \
     OCS_SSL_ENABLED=0 OCS_SSL_WEB_MODE=DISABLED OCS_SSL_COM_MODE=DISABLED OCS_SSL_KEY=/path/to/key OCS_SSL_CERT=/path/to/cert OCS_SSL_CA=/path/to/ca \
     TZ=Europe/Paris
+
+VOLUME /var/lib/ocsinventory-reports /etc/ocsinventory-server /usr/share/ocsinventory-reports
 
 WORKDIR /tmp
 
@@ -61,6 +61,18 @@ RUN yum ${YUM_FLAGS} install wget \
     php73-php-fpm \
     php73-php-soap \
     php73-php-opcache ;
+
+RUN wget http://download.ocsinventory-ng.org/nightly/latest.tar.gz && \
+    tar xzf latest.tar.gz ;
+
+WORKDIR /tmp/OCSNG_UNIX_SERVER
+
+RUN cd Apache/ && \
+    perl Makefile.PL && \ 
+    make && \
+    make install ;
+
+WORKDIR /tmp
 
 COPY conf/ /tmp/conf
 COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
