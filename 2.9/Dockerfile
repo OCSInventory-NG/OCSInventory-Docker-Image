@@ -44,7 +44,7 @@ RUN yum ${YUM_FLAGS} install wget \
     httpd \
     php73-php \
     php73-php-cli \
-    php73-php-cli \
+    php73-php-ldap \
     php73-php-gd \
     php73-php-imap \
     php73-php-pdo \
