@@ -60,6 +60,7 @@ RUN yum ${YUM_FLAGS} install wget \
     php73-php-json \
     php73-php-fpm \
     php73-php-soap \
+    php73-php-zip \
     php73-php-opcache ;
 
 RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/2.9/OCSNG_UNIX_SERVER-2.9.tar.gz && \
