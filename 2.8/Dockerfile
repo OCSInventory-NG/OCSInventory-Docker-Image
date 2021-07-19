@@ -44,7 +44,7 @@ RUN yum ${YUM_FLAGS} install wget \
     httpd \
     php73-php \
     php73-php-cli \
-    php73-php-cli \
+    php73-php-ldap \
     php73-php-gd \
     php73-php-imap \
     php73-php-pdo \
@@ -60,6 +60,7 @@ RUN yum ${YUM_FLAGS} install wget \
     php73-php-json \
     php73-php-fpm \
     php73-php-soap \
+    php73-php-zip \
     php73-php-opcache ;
 
 RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/2.8/OCSNG_UNIX_SERVER_2.8.tar.gz && \
