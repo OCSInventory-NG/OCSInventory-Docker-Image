@@ -1,7 +1,9 @@
 FROM centos:centos7
 
+ENV OCS_VERSION 2.9
+
 LABEL maintainer="contact@ocsinventory-ng.org" \
-      version="2.9" \
+      version="${OCS_VERSION}" \
       description="OCS Inventory docker image"
 
 ARG YUM_FLAGS="-y"
@@ -63,10 +65,10 @@ RUN yum ${YUM_FLAGS} install wget \
     php73-php-zip \
     php73-php-opcache ;
 
-RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/2.9/OCSNG_UNIX_SERVER-2.9.tar.gz && \
-    tar xzf OCSNG_UNIX_SERVER-2.9.tar.gz ;
+RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${OCS_VERSION}/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz && \
+    tar xzf OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz ;
 
-WORKDIR /tmp/OCSNG_UNIX_SERVER-2.9
+WORKDIR /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}
 
 RUN cd Apache/ && \
     perl Makefile.PL && \ 
