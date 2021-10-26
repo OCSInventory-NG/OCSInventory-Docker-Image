@@ -28,11 +28,19 @@ if [ ! -f /etc/httpd/conf.d/z-ocsinventory-server.conf ]; then
 	sed -i 's/"PATH_TO_LOG_DIRECTORY"/'"${OCS_LOG_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 	sed -i 's/"PATH_TO_PLUGINS_PERL_DIRECTORY"/'"${OCS_PERLEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 	sed -i 's/"PATH_TO_PLUGINS_CONFIG_DIRECTORY"/'"${OCS_PLUGINSEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/OCS_SSL_KEY/'"${OCS_SSL_KEY//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/OCS_SSL_CERT/'"${OCS_SSL_CERT//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/OCS_SSL_CA/'"${OCS_SSL_CA//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/OCS_SSL_COM_MODE/'"$OCS_SSL_COM_MODE"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
+fi
+
+# Replace Variables
+SRV_CONF_FILE="/etc/httpd/conf.d/z-ocsinventory-server.conf"
+if [[ -f ${SRV_CONF_FILE} ]]; then
+	# Get all env vars starting with 'OCS_'
+	for var in $(env | cut -f1 -d= | grep -i OCS_); do
+		# Check that the current var is not commented out in conf file
+		if grep -q "^\s*PerlSetEnv ${var^^}" ${SRV_CONF_FILE} ; then
+			echo "Applying Config ${var^^}=${!var} from environment variable"
+			sed -ie "s,^\(\s*PerlSetEnv ${var^^}\).*$,\1 ${!var},g" ${SRV_CONF_FILE}
+		fi
+	done
 fi
 
 # Configure ocsinventory-reports file 
