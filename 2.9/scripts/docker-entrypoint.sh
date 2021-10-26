@@ -1,5 +1,13 @@
 #!/bin/bash
 
+echo
+echo "+----------------------------------------------------------+"
+echo "|                                                          |"
+echo "|      Welcome to OCS Inventory NG Management Docker!      |"
+echo "|                                                          |"
+echo "+----------------------------------------------------------+"
+echo
+
 # Create all directories
 mkdir -p $OCS_LOG_DIR
 mkdir -p $OCS_PERLEXT_DIR/Apache/Ocsinventory/Plugins
@@ -15,9 +23,28 @@ if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/var.php ]; then
 	rm -rf ${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php
 fi;
     
+if [ ! -z ${OCS_DISABLE_COM_MODE+x} ]; then
+	echo
+	echo "+---------------------------------------------------------------------------+"
+	echo "| Warning: OCS_DISABLE_COM_MODE environment variable is set!                |"
+	echo "| Communication server, which handles HTTP communications between database  |"
+	echo "| server and agents (Apache, perl and mod_perl) will be DISABLED!  		  |"
+	echo "+---------------------------------------------------------------------------+"
+	echo
+fi
+
+if [ ! -z ${OCS_DISABLE_WEB_MODE+x} ]; then
+	echo
+	echo "+---------------------------------------------------------------------------+"
+	echo "| Warning: OCS_DISABLE_WEB_MODE environment variable is set!                |"
+	echo "| Administration console, which allows administrators to query the database |"
+	echo "| server using their favorite browser (Apache, php) will be DISABLED!  	  |"
+	echo "+---------------------------------------------------------------------------+"
+	echo
+fi
 
 # Configure z-ocsinventory-server file 
-if [ ! -f /etc/httpd/conf.d/z-ocsinventory-server.conf ]; then
+if [ ! -f /etc/httpd/conf.d/z-ocsinventory-server.conf ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
     cp /tmp/conf/ocsinventory-server.conf /etc/httpd/conf.d/z-ocsinventory-server.conf
 	sed -i 's/VERSION_MP/2/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 	sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
@@ -32,7 +59,11 @@ fi
 
 # Replace Variables
 SRV_CONF_FILE="/etc/httpd/conf.d/z-ocsinventory-server.conf"
-if [[ -f ${SRV_CONF_FILE} ]]; then
+if [ -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
+	echo "+-----------------------------------------------+"
+	echo "|   Customizing from environment variables...   |"
+	echo "+-----------------------------------------------+"
+	echo
 	# Get all env vars starting with 'OCS_'
 	for var in $(env | cut -f1 -d= | grep -i OCS_); do
 		# Check that the current var is not commented out in conf file
@@ -44,7 +75,7 @@ if [[ -f ${SRV_CONF_FILE} ]]; then
 fi
 
 # Configure ocsinventory-reports file 
-if [ ! -f /etc/httpd/conf.d/ocsinventory-reports.conf ]; then
+if [ ! -f /etc/httpd/conf.d/ocsinventory-reports.conf ] && [ -z ${OCS_DISABLE_WEB_MODE+x} ]; then
 	cp /tmp/conf/ocsinventory-reports.conf /etc/httpd/conf.d/ocsinventory-reports.conf
 	sed -i 's/OCSREPORTS_ALIAS/\/ocsreports/g' /etc/httpd/conf.d/ocsinventory-reports.conf
 	sed -i 's/PATH_TO_OCSREPORTS_DIR/'"${OCS_WEBCONSOLE_DIR//\//\\/}"'\/ocsreports/g' /etc/httpd/conf.d/ocsinventory-reports.conf
@@ -55,7 +86,7 @@ if [ ! -f /etc/httpd/conf.d/ocsinventory-reports.conf ]; then
 fi
 
 # Generate dbconfig.inc.php
-if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php ]; then
+if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php ] && [ -z ${OCS_DISABLE_WEB_MODE+x} ]; then
 	cp /tmp/conf/dbconfig.inc.php $OCS_WEBCONSOLE_DIR/ocsreports
 	sed -i 's/OCS_DB_NAME/'"$OCS_DB_NAME"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
 	sed -i 's/OCS_READ_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
@@ -81,9 +112,14 @@ if [ -f $OCS_WEBCONSOLE_DIR/ocsreports/install.php ]; then
 fi
 
 # Remove temp files
+echo
+echo "+--------------------------------+"
+echo "|   Removing not used files...   |"
+echo "+--------------------------------+"
+echo
 cd /tmp
 shopt -s extglob
-rm -rf -v !("conf")
+rm -rf !("conf")
 
 # Apache start
 if [ ! -d "$APACHE_RUN_DIR" ]; then
@@ -93,5 +129,12 @@ fi
 if [ -f "$APACHE_PID_FILE" ]; then
 	rm "$APACHE_PID_FILE"
 fi
+
+echo "+----------------------------------------------------------+"
+echo "|                 OK, prepare finshed ;-)                  |"
+echo "|                                                          |"
+echo "|      Starting OCS Inventory NG Management Docker...      |"
+echo "+----------------------------------------------------------+"
+echo
 
 /usr/sbin/httpd -DFOREGROUND
