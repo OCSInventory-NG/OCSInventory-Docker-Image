@@ -23,7 +23,7 @@ mkdir -p $OCS_VARLIB_DIR/scripts
 mkdir -p $OCS_VARLIB_DIR/snmp
 
 if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/var.php ]; then
-	cp -r /tmp/OCSNG_UNIX_SERVER-2.9/ocsreports/ ${OCS_WEBCONSOLE_DIR}
+	cp -r /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/ocsreports/ ${OCS_WEBCONSOLE_DIR}
 	rm -rf ${DB_CONFIG_INC_FILE}
 fi;
     
@@ -72,7 +72,7 @@ if [ -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
 		# Check that the current var is not commented out in conf file
 		if grep -q "^\s*PerlSetEnv ${var^^}" ${SRV_CONF_FILE} ; then
 			echo "Applying Config ${var^^}=${!var} from environment variable"
-			sed -ie "s,^\(\s*PerlSetEnv ${var^^}\).*$,\1 ${!var},g" ${SRV_CONF_FILE}
+			sed -i "s,^\(\s*PerlSetEnv ${var^^}\).*$,\1 ${!var},g" ${SRV_CONF_FILE}
 		fi
 	done
 fi
