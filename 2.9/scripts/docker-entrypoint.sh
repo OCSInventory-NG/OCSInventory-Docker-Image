@@ -1,5 +1,9 @@
 #!/bin/bash
 
+SRV_CONF_FILE="/etc/httpd/conf.d/z-ocsinventory-server.conf"
+REPORTS_CONF_FILE="/etc/httpd/conf.d/ocsinventory-reports.conf"
+DB_CONFIG_INC_FILE="${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php"
+
 echo
 echo "+----------------------------------------------------------+"
 echo "|                                                          |"
@@ -20,7 +24,7 @@ mkdir -p $OCS_VARLIB_DIR/snmp
 
 if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/var.php ]; then
 	cp -r /tmp/OCSNG_UNIX_SERVER-2.9/ocsreports/ ${OCS_WEBCONSOLE_DIR}
-	rm -rf ${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php
+	rm -rf ${DB_CONFIG_INC_FILE}
 fi;
     
 if [ ! -z ${OCS_DISABLE_COM_MODE+x} ]; then
@@ -28,7 +32,7 @@ if [ ! -z ${OCS_DISABLE_COM_MODE+x} ]; then
 	echo "+---------------------------------------------------------------------------+"
 	echo "| Warning: OCS_DISABLE_COM_MODE environment variable is set!                |"
 	echo "| Communication server, which handles HTTP communications between database  |"
-	echo "| server and agents (Apache, perl and mod_perl) will be DISABLED!  		  |"
+	echo "| server and agents (Apache, perl and mod_perl) will be DISABLED!  	  |"
 	echo "+---------------------------------------------------------------------------+"
 	echo
 fi
@@ -44,21 +48,20 @@ if [ ! -z ${OCS_DISABLE_WEB_MODE+x} ]; then
 fi
 
 # Configure z-ocsinventory-server file 
-if [ ! -f /etc/httpd/conf.d/z-ocsinventory-server.conf ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
-    cp /tmp/conf/ocsinventory-server.conf /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/VERSION_MP/2/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/DATABASE_NAME/'"$OCS_DB_NAME"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/DATABASE_USER/'"$OCS_DB_USER"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/"PATH_TO_LOG_DIRECTORY"/'"${OCS_LOG_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/"PATH_TO_PLUGINS_PERL_DIRECTORY"/'"${OCS_PERLEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
-	sed -i 's/"PATH_TO_PLUGINS_CONFIG_DIRECTORY"/'"${OCS_PLUGINSEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
+if [ ! -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
+    cp /tmp/conf/ocsinventory-server.conf ${SRV_CONF_FILE}
+	sed -i 's/VERSION_MP/2/g' ${SRV_CONF_FILE}
+	sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' ${SRV_CONF_FILE}
+	sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' ${SRV_CONF_FILE}
+	sed -i 's/DATABASE_NAME/'"$OCS_DB_NAME"'/g' ${SRV_CONF_FILE}
+	sed -i 's/DATABASE_USER/'"$OCS_DB_USER"'/g' ${SRV_CONF_FILE}
+	sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' ${SRV_CONF_FILE}
+	sed -i 's/"PATH_TO_LOG_DIRECTORY"/'"${OCS_LOG_DIR//\//\\/}"'/g' ${SRV_CONF_FILE}
+	sed -i 's/"PATH_TO_PLUGINS_PERL_DIRECTORY"/'"${OCS_PERLEXT_DIR//\//\\/}"'/g' ${SRV_CONF_FILE}
+	sed -i 's/"PATH_TO_PLUGINS_CONFIG_DIRECTORY"/'"${OCS_PLUGINSEXT_DIR//\//\\/}"'/g' ${SRV_CONF_FILE}
 fi
 
 # Replace Variables
-SRV_CONF_FILE="/etc/httpd/conf.d/z-ocsinventory-server.conf"
 if [ -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
 	echo "+-----------------------------------------------+"
 	echo "|   Customizing from environment variables...   |"
@@ -75,30 +78,30 @@ if [ -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
 fi
 
 # Configure ocsinventory-reports file 
-if [ ! -f /etc/httpd/conf.d/ocsinventory-reports.conf ] && [ -z ${OCS_DISABLE_WEB_MODE+x} ]; then
-	cp /tmp/conf/ocsinventory-reports.conf /etc/httpd/conf.d/ocsinventory-reports.conf
-	sed -i 's/OCSREPORTS_ALIAS/\/ocsreports/g' /etc/httpd/conf.d/ocsinventory-reports.conf
-	sed -i 's/PATH_TO_OCSREPORTS_DIR/'"${OCS_WEBCONSOLE_DIR//\//\\/}"'\/ocsreports/g' /etc/httpd/conf.d/ocsinventory-reports.conf
-	sed -i 's/PACKAGES_ALIAS/\/download/g' /etc/httpd/conf.d/ocsinventory-reports.conf
-	sed -i 's/PATH_TO_PACKAGES_DIR/'"${OCS_VARLIB_DIR//\//\\/}"'download/g' /etc/httpd/conf.d/ocsinventory-reports.conf
-	sed -i 's/SNMP_ALIAS/\/snmp/g' /etc/httpd/conf.d/ocsinventory-reports.conf
-	sed -i 's/PATH_TO_SNMP_DIR/'"${OCS_VARLIB_DIR//\//\\/}"'snmp/g' /etc/httpd/conf.d/ocsinventory-reports.conf
+if [ ! -f ${REPORTS_CONF_FILE} ] && [ -z ${OCS_DISABLE_WEB_MODE+x} ]; then
+	cp /tmp/conf/ocsinventory-reports.conf ${REPORTS_CONF_FILE}
+	sed -i 's/OCSREPORTS_ALIAS/\/ocsreports/g' ${REPORTS_CONF_FILE}
+	sed -i 's/PATH_TO_OCSREPORTS_DIR/'"${OCS_WEBCONSOLE_DIR//\//\\/}"'\/ocsreports/g' ${REPORTS_CONF_FILE}
+	sed -i 's/PACKAGES_ALIAS/\/download/g' ${REPORTS_CONF_FILE}
+	sed -i 's/PATH_TO_PACKAGES_DIR/'"${OCS_VARLIB_DIR//\//\\/}"'download/g' ${REPORTS_CONF_FILE}
+	sed -i 's/SNMP_ALIAS/\/snmp/g' ${REPORTS_CONF_FILE}
+	sed -i 's/PATH_TO_SNMP_DIR/'"${OCS_VARLIB_DIR//\//\\/}"'snmp/g' ${REPORTS_CONF_FILE}
 fi
 
 # Generate dbconfig.inc.php
-if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php ] && [ -z ${OCS_DISABLE_WEB_MODE+x} ]; then
+if [ ! -f ${DB_CONFIG_INC_FILE} ] && [ -z ${OCS_DISABLE_WEB_MODE+x} ]; then
 	cp /tmp/conf/dbconfig.inc.php $OCS_WEBCONSOLE_DIR/ocsreports
-	sed -i 's/OCS_DB_NAME/'"$OCS_DB_NAME"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_READ_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_WRITE_NAME/'"$OCS_DB_SERVER"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_DB_PORT/'"$OCS_DB_PORT"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_DB_USER/'"$OCS_DB_USER"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_DB_PASS/'"$OCS_DB_PASS"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_SSL_WEB_MODE/'"$OCS_SSL_WEB_MODE"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_SSL_KEY/'"${OCS_SSL_KEY//\//\\/}"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_SSL_CERT/'"${OCS_SSL_CERT//\//\\/}"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
-	sed -i 's/OCS_SSL_CA/'"${OCS_SSL_CA//\//\\/}"'/g' $OCS_WEBCONSOLE_DIR/ocsreports/dbconfig.inc.php
+	sed -i 's/OCS_DB_NAME/'"$OCS_DB_NAME"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_READ_NAME/'"$OCS_DB_SERVER"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_WRITE_NAME/'"$OCS_DB_SERVER"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_DB_PORT/'"$OCS_DB_PORT"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_DB_USER/'"$OCS_DB_USER"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_DB_PASS/'"$OCS_DB_PASS"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_SSL_WEB_MODE/'"$OCS_SSL_WEB_MODE"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_SSL_KEY/'"${OCS_SSL_KEY//\//\\/}"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_SSL_CERT/'"${OCS_SSL_CERT//\//\\/}"'/g' ${DB_CONFIG_INC_FILE}
+	sed -i 's/OCS_SSL_CA/'"${OCS_SSL_CA//\//\\/}"'/g' ${DB_CONFIG_INC_FILE}
 fi
 
 # Permissions
