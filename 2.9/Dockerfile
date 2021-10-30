@@ -71,7 +71,7 @@ RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/dow
 WORKDIR /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}
 
 RUN cd Apache/ && \
-    perl Makefile.PL && \ 
+    perl Makefile.PL && \
     make && \
     make install ;
 
@@ -82,4 +82,6 @@ COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
 EXPOSE 80 443
 
+# https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#entrypoint
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+CMD ["/usr/sbin/httpd", "-DFOREGROUND"]

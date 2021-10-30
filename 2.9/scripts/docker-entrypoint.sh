@@ -22,7 +22,7 @@ if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/var.php ]; then
 	cp -r /tmp/OCSNG_UNIX_SERVER-2.9/ocsreports/ ${OCS_WEBCONSOLE_DIR}
 	rm -rf ${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php
 fi;
-    
+
 if [ ! -z ${OCS_DISABLE_COM_MODE+x} ]; then
 	echo
 	echo "+---------------------------------------------------------------------------+"
@@ -43,7 +43,7 @@ if [ ! -z ${OCS_DISABLE_WEB_MODE+x} ]; then
 	echo
 fi
 
-# Configure z-ocsinventory-server file 
+# Configure z-ocsinventory-server file
 if [ ! -f /etc/httpd/conf.d/z-ocsinventory-server.conf ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
     cp /tmp/conf/ocsinventory-server.conf /etc/httpd/conf.d/z-ocsinventory-server.conf
 	sed -i 's/VERSION_MP/2/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
@@ -74,7 +74,7 @@ if [ -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
 	done
 fi
 
-# Configure ocsinventory-reports file 
+# Configure ocsinventory-reports file
 if [ ! -f /etc/httpd/conf.d/ocsinventory-reports.conf ] && [ -z ${OCS_DISABLE_WEB_MODE+x} ]; then
 	cp /tmp/conf/ocsinventory-reports.conf /etc/httpd/conf.d/ocsinventory-reports.conf
 	sed -i 's/OCSREPORTS_ALIAS/\/ocsreports/g' /etc/httpd/conf.d/ocsinventory-reports.conf
@@ -137,4 +137,4 @@ echo "|      Starting OCS Inventory NG Management Docker...      |"
 echo "+----------------------------------------------------------+"
 echo
 
-/usr/sbin/httpd -DFOREGROUND
+exec "$@"
