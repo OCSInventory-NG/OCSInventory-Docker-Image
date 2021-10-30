@@ -34,7 +34,7 @@ RUN yum ${YUM_FLAGS} install wget \
     perl-Compress-Zlib \
     perl-DBI perl-DBD-MySQL \
     perl-Net-IP \
-    perl-SOAP-Lite \
+    perl-Apache2-SOAP \
     perl-Archive-Zip \
     perl-Mojolicious \
     perl-Plack \
