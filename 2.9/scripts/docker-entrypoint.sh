@@ -43,6 +43,13 @@ if [ ! -z ${OCS_DISABLE_WEB_MODE+x} ]; then
 	echo
 fi
 
+echo "+----------------------------------------------------------+"
+echo "|   Setting Apache Server Name to '${APACHE_SERVER_NAME:-localhost}'"
+echo "+----------------------------------------------------------+"
+echo
+sed -ri -e "s!^#(ServerName)\s+\S+!\1 ${APACHE_SERVER_NAME:-localhost}:80!g" \
+      "/etc/httpd/conf/httpd.conf"
+
 # Configure z-ocsinventory-server file
 if [ ! -f /etc/httpd/conf.d/z-ocsinventory-server.conf ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
     cp /tmp/conf/ocsinventory-server.conf /etc/httpd/conf.d/z-ocsinventory-server.conf
