@@ -25,7 +25,7 @@ services:
     networks:
       - localocs
     depends_on:
-      - ocsdb    
+      - ocsdb
 
   ocsdb :
     image : mysql:5.7
@@ -43,7 +43,24 @@ services:
       MYSQL_DATABASE : ocsweb
     networks:
       - localocs
-  
+
+  ocscron:
+    image: ocsinventory/ocsinventory-docker-image:2.9
+    container_name : ocsinventory-cron
+    restart: always
+    command: /usr/bin/cron.sh
+    environment:
+      OCS_DB_SERVER: ocsinventory-db
+      OCS_DB_USER: ocsuser
+      OCS_DB_PASS: ocspass
+      OCS_DB_NAME: ocsweb
+    links:
+      - ocsdb
+    networks:
+      - localocs
+    depends_on:
+      - ocsdb
+
 networks:
   localocs:
 
@@ -53,4 +70,4 @@ volumes:
   varlibdata:
   httpdconfdata:
   sqldata:
-  
+

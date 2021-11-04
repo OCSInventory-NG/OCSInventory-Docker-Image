@@ -23,6 +23,7 @@ RUN yum ${YUM_FLAGS} install wget \
     yum-utils \
     tar \
     make \
+    crontabs \
     yum ${YUM_FLAGS} install epel-release ; \
     wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm ; \
     wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm ; \
@@ -63,6 +64,10 @@ RUN yum ${YUM_FLAGS} install wget \
     php73-php-zip \
     php73-php-opcache ;
 
+# https://wiki.ocsinventory-ng.org/03.Basic-documentation/Understanding-OCS-Crontab/
+RUN mkdir -p /var/spool/cron; \
+    echo '*/30 * * * * cd /usr/share/ocsinventory-reports/ocsreports/crontab; for cron in $(ls cron*.php); do date --iso-8601=s; echo "Executing cron: ${cron}"; /usr/bin/php73 ${cron}; done' > /var/spool/cron/apache
+
 RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${OCS_VERSION}/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -P /tmp && \
     tar xzf /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -C /tmp;
 
@@ -82,7 +87,7 @@ RUN sed -ri \
       "/etc/httpd/conf/httpd.conf"
 
 COPY conf/ /tmp/conf
-COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
+COPY ./scripts/*.sh /usr/bin/
 
 EXPOSE 80 443
 
