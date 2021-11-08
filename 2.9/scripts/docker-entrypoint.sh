@@ -22,6 +22,8 @@ if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/var.php ]; then
 	cp -r /tmp/OCSNG_UNIX_SERVER-2.9/ocsreports/ ${OCS_WEBCONSOLE_DIR}
 	rm -rf ${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php
 fi;
+
+cp -r /tmp/OCSNG_UNIX_SERVER-2.9/Api/ /usr/local/share/perl5
     
 if [ ! -z ${OCS_DISABLE_COM_MODE+x} ]; then
 	echo
@@ -55,6 +57,19 @@ if [ ! -f /etc/httpd/conf.d/z-ocsinventory-server.conf ] && [ -z ${OCS_DISABLE_C
 	sed -i 's/"PATH_TO_LOG_DIRECTORY"/'"${OCS_LOG_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 	sed -i 's/"PATH_TO_PLUGINS_PERL_DIRECTORY"/'"${OCS_PERLEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 	sed -i 's/"PATH_TO_PLUGINS_CONFIG_DIRECTORY"/'"${OCS_PLUGINSEXT_DIR//\//\\/}"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
+fi
+
+# Configure zz-ocsinventory-restapi file
+if [ ! -f /etc/httpd/conf.d/zz-ocsinventory-restapi.conf ]; then
+    cp /tmp/conf/ocsinventory-restapi.conf /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_NAME/'"$OCS_DB_NAME"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_USER/'"$OCS_DB_USER"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/REST_API_PATH/\/usr\/local\/share\/perl5/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/REST_API_LOADER_PATH/\/usr\/local\/share\/perl5\/Api\/Ocsinventory\/Restapi\/Loader.pm/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
 fi
 
 # Replace Variables
