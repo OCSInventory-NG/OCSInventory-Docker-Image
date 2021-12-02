@@ -72,6 +72,8 @@ RUN cd Apache/ && \
     make && \
     make install ;
 
+RUN cp -r Api/ /usr/local/share/perl5/
+
 WORKDIR /tmp
 
 COPY conf/ /tmp/conf
