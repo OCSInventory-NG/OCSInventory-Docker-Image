@@ -28,7 +28,7 @@ if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/var.php ]; then
 	rm -rf ${DB_CONFIG_INC_FILE}
 fi;
 
-cp -r /tmp/OCSNG_UNIX_SERVER-2.9/Api/ /usr/local/share/perl5
+cp -r /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/Api/ /usr/local/share/perl5
 
 if [ ! -z ${OCS_DISABLE_API_MODE+x} ]; then
 	echo
@@ -81,7 +81,7 @@ if [ ! -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
 fi
 
 # Configure zz-ocsinventory-restapi file
-if [ ! -f ${API_CONF_FILE} && [ -z ${OCS_DISABLE_API_MODE+x} ]; then
+if [ ! -f ${API_CONF_FILE} ] && [ -z ${OCS_DISABLE_API_MODE+x} ]; then
     cp /tmp/conf/ocsinventory-restapi.conf ${API_CONF_FILE}
        sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' ${API_CONF_FILE}
        sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' ${API_CONF_FILE}
