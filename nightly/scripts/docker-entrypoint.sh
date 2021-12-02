@@ -35,6 +35,19 @@ if [ ! -f /etc/httpd/conf.d/z-ocsinventory-server.conf ]; then
 	sed -i 's/OCS_SSL_COM_MODE/'"$OCS_SSL_COM_MODE"'/g' /etc/httpd/conf.d/z-ocsinventory-server.conf
 fi
 
+# Configure zz-ocsinventory-restapi file
+if [ ! -f /etc/httpd/conf.d/zz-ocsinventory-restapi.conf ]; then
+    cp /tmp/conf/ocsinventory-restapi.conf /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_NAME/'"$OCS_DB_NAME"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_USER/'"$OCS_DB_USER"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/REST_API_PATH/\/usr\/local\/share\/perl5/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+       sed -i 's/REST_API_LOADER_PATH/\/usr\/local\/share\/perl5\/Api\/Ocsinventory\/Restapi\/Loader.pm/g' /etc/httpd/conf.d/zz-ocsinventory-restapi.conf
+fi
+
 # Configure ocsinventory-reports file 
 if [ ! -f /etc/httpd/conf.d/ocsinventory-reports.conf ]; then
 	cp /tmp/conf/ocsinventory-reports.conf /etc/httpd/conf.d/ocsinventory-reports.conf
