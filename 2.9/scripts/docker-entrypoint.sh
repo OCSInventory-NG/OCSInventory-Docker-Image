@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API_CONF_FILE="${API_CONF_FILE}"
+API_CONF_FILE="/etc/httpd/conf.d/zz-ocsinventory-restapi.conf"
 SRV_CONF_FILE="/etc/httpd/conf.d/z-ocsinventory-server.conf"
 REPORTS_CONF_FILE="/etc/httpd/conf.d/ocsinventory-reports.conf"
 DB_CONFIG_INC_FILE="${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php"
