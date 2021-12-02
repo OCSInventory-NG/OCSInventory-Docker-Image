@@ -18,8 +18,6 @@ ENV APACHE_RUN_USER=apache APACHE_RUN_GROUP=apache \
 
 VOLUME /var/lib/ocsinventory-reports /etc/ocsinventory-server /usr/share/ocsinventory-reports/ocsreports/extensions
 
-WORKDIR /tmp
-
 RUN yum ${YUM_FLAGS} install wget \
     curl \
     yum-utils \
@@ -36,7 +34,7 @@ RUN yum ${YUM_FLAGS} install wget \
     perl-Compress-Zlib \
     perl-DBI perl-DBD-MySQL \
     perl-Net-IP \
-    perl-SOAP-Lite \
+    perl-Apache2-SOAP \
     perl-Archive-Zip \
     perl-Mojolicious \
     perl-Plack \
@@ -65,21 +63,29 @@ RUN yum ${YUM_FLAGS} install wget \
     php73-php-zip \
     php73-php-opcache ;
 
-RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${OCS_VERSION}/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz && \
-    tar xzf OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz ;
+RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${OCS_VERSION}/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -P /tmp && \
+    tar xzf /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -C /tmp;
 
-WORKDIR /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}
-
-RUN cd Apache/ && \
-    perl Makefile.PL && \ 
+RUN cd /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/Apache/ && \
+    perl Makefile.PL && \
     make && \
     make install ;
 
-WORKDIR /tmp
+WORKDIR /etc/httpd/conf.d
+
+# Redirect Apache2 Logs to stdout e stderr
+# https://github.com/docker-library/httpd/blob/5f92ab18146f41d1d324e99c5e197bdeda65d063/2.4/Dockerfile#L202
+RUN sed -ri \
+      -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
+      -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
+      -e 's!^(\s*TransferLog)\s+\S+!\1 /proc/self/fd/1!g' \
+      "/etc/httpd/conf/httpd.conf"
 
 COPY conf/ /tmp/conf
 COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
 EXPOSE 80 443
 
+# https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#entrypoint
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
