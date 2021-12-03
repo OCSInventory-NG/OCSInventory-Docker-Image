@@ -1,7 +1,9 @@
 FROM centos:centos7
 
+ENV OCS_VERSION nightly
+
 LABEL maintainer="contact@ocsinventory-ng.org" \
-      version="nightly" \
+      version="${OCS_VERSION}" \
       description="OCS Inventory docker image"
 
 ARG YUM_FLAGS="-y"
@@ -14,9 +16,7 @@ ENV APACHE_RUN_USER=apache APACHE_RUN_GROUP=apache \
     OCS_SSL_ENABLED=0 OCS_SSL_WEB_MODE=DISABLED OCS_SSL_COM_MODE=DISABLED OCS_SSL_KEY=/path/to/key OCS_SSL_CERT=/path/to/cert OCS_SSL_CA=/path/to/ca \
     TZ=Europe/Paris
 
-VOLUME /var/lib/ocsinventory-reports /etc/ocsinventory-server /usr/share/ocsinventory-reports
-
-WORKDIR /tmp
+VOLUME /var/lib/ocsinventory-reports /etc/ocsinventory-server /usr/share/ocsinventory-reports/ocsreports/extensions
 
 RUN yum ${YUM_FLAGS} install wget \
     curl \
@@ -34,7 +34,7 @@ RUN yum ${YUM_FLAGS} install wget \
     perl-Compress-Zlib \
     perl-DBI perl-DBD-MySQL \
     perl-Net-IP \
-    perl-SOAP-Lite \
+    perl-Apache2-SOAP \
     perl-Archive-Zip \
     perl-Mojolicious \
     perl-Plack \
@@ -44,7 +44,7 @@ RUN yum ${YUM_FLAGS} install wget \
     httpd \
     php73-php \
     php73-php-cli \
-    php73-php-cli \
+    php73-php-ldap \
     php73-php-gd \
     php73-php-imap \
     php73-php-pdo \
@@ -60,25 +60,32 @@ RUN yum ${YUM_FLAGS} install wget \
     php73-php-json \
     php73-php-fpm \
     php73-php-soap \
+    php73-php-zip \
     php73-php-opcache ;
 
-RUN wget http://download.ocsinventory-ng.org/nightly/latest.tar.gz && \
-    tar xzf latest.tar.gz ;
+RUN wget http://download.ocsinventory-ng.org/nightly/latest.tar.gz -P /tmp && \
+    tar xzf /tmp/latest.tar.gz -C /tmp;
 
-WORKDIR /tmp/OCSNG_UNIX_SERVER
-
-RUN cd Apache/ && \
-    perl Makefile.PL && \ 
+RUN cd /tmp/OCSNG_UNIX_SERVER/Apache/ && \
+    perl Makefile.PL && \
     make && \
     make install ;
 
-RUN cp -r Api/ /usr/local/share/perl5/
+WORKDIR /etc/httpd/conf.d
 
-WORKDIR /tmp
+# Redirect Apache2 Logs to stdout e stderr
+# https://github.com/docker-library/httpd/blob/5f92ab18146f41d1d324e99c5e197bdeda65d063/2.4/Dockerfile#L202
+RUN sed -ri \
+      -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
+      -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
+      -e 's!^(\s*TransferLog)\s+\S+!\1 /proc/self/fd/1!g' \
+      "/etc/httpd/conf/httpd.conf"
 
 COPY conf/ /tmp/conf
 COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
 EXPOSE 80 443
 
+# https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#entrypoint
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
