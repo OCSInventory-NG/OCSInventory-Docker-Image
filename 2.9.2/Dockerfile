@@ -16,13 +16,17 @@ ENV APACHE_RUN_USER=www-data APACHE_RUN_GROUP=www-data \
     OCS_SSL_ENABLED=0 OCS_SSL_WEB_MODE=DISABLED OCS_SSL_COM_MODE=DISABLED OCS_SSL_KEY=/path/to/key OCS_SSL_CERT=/path/to/cert OCS_SSL_CA=/path/to/ca \
     TZ=Europe/Paris
 
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 VOLUME /var/lib/ocsinventory-reports /etc/ocsinventory-server /usr/share/ocsinventory-reports/ocsreports/extensions
 
-RUN apt-get ${APT_FLAGS} install wget \
+RUN apt-get update && apt-get install -y \
+    wget \
     curl \
     make \
-    apt-get update ; \
-    apt-get ${APT_FLAGS} install perl \
+    perl \
+    apache2 \
+    php \
     libxml-simple-perl \
     libdbi-perl \
     libdbd-mysql-perl \
@@ -31,17 +35,16 @@ RUN apt-get ${APT_FLAGS} install wget \
     libsoap-lite-perl \
     libarchive-zip-perl \
     build-essential \
-    apache2 ; \
-    cpan install XML::Entities ; \
-    apt-get ${APT_FLAGS} install php-pclzip \
-    php \
+    php-pclzip \
     php-mbstring \
     php-soap \
     php-mysql \
     php-curl \
     php-xml \
     php-zip \
-    php-gd ;
+    php-gd
+
+RUN cpan install -y XML::Entities
 
 RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${OCS_VERSION}/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -P /tmp && \
     tar xzf /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -C /tmp;
@@ -49,11 +52,7 @@ RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/dow
 RUN cd /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/Apache/ && \
     perl Makefile.PL && \
     make && \
-    make install ;
-
-RUN a2enconf ocsinventory-reports \
-    a2enconf ocsinventory-server \
-    systemctl restart apache2 ;
+    make install
 
 WORKDIR /etc/apache2/conf-available
 
