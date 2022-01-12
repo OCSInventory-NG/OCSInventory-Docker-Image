@@ -1,8 +1,8 @@
 #!/bin/bash
 
-API_CONF_FILE="/etc/apache2/conf-avalaible/zz-ocsinventory-restapi.conf"
-SRV_CONF_FILE="/etc/apache2/conf-avalaible/z-ocsinventory-server.conf"
-REPORTS_CONF_FILE="/etc/apache2/conf-avalaible/ocsinventory-reports.conf"
+API_CONF_FILE="/etc/apache2/conf-available/zz-ocsinventory-restapi.conf"
+SRV_CONF_FILE="/etc/apache2/conf-available/z-ocsinventory-server.conf"
+REPORTS_CONF_FILE="/etc/apache2/conf-available/ocsinventory-reports.conf"
 DB_CONFIG_INC_FILE="${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php"
 
 echo
