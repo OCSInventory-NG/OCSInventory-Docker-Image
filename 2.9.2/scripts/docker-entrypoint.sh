@@ -1,8 +1,8 @@
 #!/bin/bash
 
-API_CONF_FILE="/etc/httpd/conf.d/zz-ocsinventory-restapi.conf"
-SRV_CONF_FILE="/etc/httpd/conf.d/z-ocsinventory-server.conf"
-REPORTS_CONF_FILE="/etc/httpd/conf.d/ocsinventory-reports.conf"
+API_CONF_FILE="/etc/apache2/conf-avalaible/zz-ocsinventory-restapi.conf"
+SRV_CONF_FILE="/etc/apache2/conf-avalaible/z-ocsinventory-server.conf"
+REPORTS_CONF_FILE="/etc/apache2/conf-avalaible/ocsinventory-reports.conf"
 DB_CONFIG_INC_FILE="${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php"
 
 echo
@@ -64,7 +64,7 @@ echo "|   Setting Apache Server Name to '${APACHE_SERVER_NAME:-localhost}'"
 echo "+----------------------------------------------------------+"
 echo
 sed -ri -e "s!^#(ServerName)\s+\S+!\1 ${APACHE_SERVER_NAME:-localhost}:80!g" \
-      "/etc/httpd/conf/httpd.conf"
+      "/etc/apache2/apache2.conf"
 
 # Configure z-ocsinventory-server file 
 if [ ! -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
@@ -155,6 +155,11 @@ echo
 cd /tmp
 shopt -s extglob
 rm -rf !("conf")
+
+# Enable conf
+a2enconf ocsinventory-reports
+a2enconf z-ocsinventory-server
+a2enconf zz-ocsinventory-restapi
 
 # Apache start
 if [ ! -d "$APACHE_RUN_DIR" ]; then
