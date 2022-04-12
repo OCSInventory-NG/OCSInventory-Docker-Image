@@ -13,6 +13,7 @@ services:
       - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
       - "varlibdata:/var/lib/ocsinventory-reports"
       - "httpdconfdata:/etc/apache2/conf-available"
+      - "ssldata:/un/path/a/mettre"
     environment:
       OCS_DB_SERVER: ocsinventory-db
       OCS_DB_USER: ocsuser
@@ -20,6 +21,10 @@ services:
       OCS_DB_NAME: ocsweb
       # See documentation to set up SSL for MySQL
       OCS_SSL_ENABLED: 0
+      # Uncomment to restrict API Access
+      OCS_API_RESTRICTED: ENABLED
+      OCS_API_USER: ocsapi
+      OCS_API_PASS: ocsapi
     links:
       - ocsdb
     networks:
@@ -52,5 +57,6 @@ volumes:
   ocsreportsdata:
   varlibdata:
   httpdconfdata:
+  ssldata:
   sqldata:
   
