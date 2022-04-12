@@ -34,6 +34,9 @@ RUN apt-get update && apt-get install -y \
     libnet-ip-perl \
     libsoap-lite-perl \
     libarchive-zip-perl \
+    libswitch-perl \
+    libmojolicious-perl \
+    libplack-perl \
     build-essential \
     php-pclzip \
     php-mbstring \
@@ -42,11 +45,7 @@ RUN apt-get update && apt-get install -y \
     php-curl \
     php-xml \
     php-zip \
-    php-gd
-
-RUN cpan install -y XML::Entities
-
-RUN cpan install -y Switch
+    php-gd 
 
 RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${OCS_VERSION}/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -P /tmp && \
     tar xzf /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -C /tmp;
