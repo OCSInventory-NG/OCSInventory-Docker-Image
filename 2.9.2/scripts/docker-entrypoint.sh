@@ -5,6 +5,9 @@ SRV_CONF_FILE="/etc/apache2/conf-available/z-ocsinventory-server.conf"
 REPORTS_CONF_FILE="/etc/apache2/conf-available/ocsinventory-reports.conf"
 DB_CONFIG_INC_FILE="${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php"
 
+API_ROUTE="/usr/local/share/perl/5.30.0"
+API_ROUTE_LOADER="/usr/local/share/perl/5.30.0/Api/Ocsinventory/Restapi/Loader.pm"
+
 echo
 echo "+----------------------------------------------------------+"
 echo "|                                                          |"
@@ -28,7 +31,7 @@ if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/var.php ]; then
 	rm -rf ${DB_CONFIG_INC_FILE}
 fi;
 
-cp -r /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/Api/ /usr/local/share/perl5
+cp -R /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/Api/ ${API_ROUTE}
 
 if [ ! -z ${OCS_DISABLE_API_MODE+x} ]; then
 	echo
@@ -89,8 +92,8 @@ if [ ! -f ${API_CONF_FILE} ] && [ -z ${OCS_DISABLE_API_MODE+x} ]; then
        sed -i 's/DATABASE_USER/'"$OCS_DB_USER"'/g' ${API_CONF_FILE}
        sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' ${API_CONF_FILE}
        sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' ${API_CONF_FILE}
-       sed -i 's/REST_API_PATH/\/usr\/local\/share\/perl5/g' ${API_CONF_FILE}
-       sed -i 's/REST_API_LOADER_PATH/\/usr\/local\/share\/perl5\/Api\/Ocsinventory\/Restapi\/Loader.pm/g' ${API_CONF_FILE}
+       sed -i 's/REST_API_PATH/'"${API_ROUTE//\//\\/}"'/g' ${API_CONF_FILE}
+       sed -i 's/REST_API_LOADER_PATH/'"${API_ROUTE_LOADER//\//\\/}"'/g' ${API_CONF_FILE}
 fi
 
 # Replace Variables
