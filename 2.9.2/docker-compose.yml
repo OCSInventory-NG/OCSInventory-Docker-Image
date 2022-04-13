@@ -5,8 +5,8 @@ services:
     image: ocsinventory/ocsinventory-docker-image:2.9.2
     container_name : ocsinventory-server
     restart: always
-    ports:
-      - 80
+    expose:
+      - "80"
     volumes:
       - "perlcomdata:/etc/ocsinventory-server"
       - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
@@ -30,8 +30,8 @@ services:
     image : mysql:8.0
     container_name : ocsinventory-db
     restart: always
-    ports :
-      - 3306:3306
+    expose :
+      - "3306"
     volumes :
       - ./sql/:/docker-entrypoint-initdb.d/
       - sqldata:/var/lib/mysql
@@ -40,6 +40,36 @@ services:
       MYSQL_USER : ocsuser
       MYSQL_PASSWORD : ocspass
       MYSQL_DATABASE : ocsweb
+    networks:
+      - localocs
+
+  ocsproxy:
+    image: nginx
+    container_name: ocsinventory-proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf:/etc/nginx/templates
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/auth:/etc/nginx/auth
+    environment:
+      # 80 or 443
+      LISTEN_PORT: 80
+      # empty or ssl
+      PORT_TYPE: ""
+      SSL_CERT: ocs-dummy.crt
+      SSL_KEY: ocs-dummy.key
+      # OCS Api user restriction (default ocsapi/ocapi)
+      API_AUTH_FILE: ocsapi.htpasswd
+      # OCS Download
+      READ_TIMEOUT: 300
+      CONNECT_TIMEOUT: 300
+      SEND_TIMEOUT: 300
+      MAX_BODY_SIZE: 1G
+    depends_on:
+      - ocsapplication
     networks:
       - localocs
   
