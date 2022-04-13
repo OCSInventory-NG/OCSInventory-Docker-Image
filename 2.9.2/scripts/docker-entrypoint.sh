@@ -5,8 +5,8 @@ SRV_CONF_FILE="/etc/apache2/conf-available/z-ocsinventory-server.conf"
 REPORTS_CONF_FILE="/etc/apache2/conf-available/ocsinventory-reports.conf"
 DB_CONFIG_INC_FILE="${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php"
 
-API_ROUTE="/usr/local/share/perl/5.30.0"
-API_ROUTE_LOADER="/usr/local/share/perl/5.30.0/Api/Ocsinventory/Restapi/Loader.pm"
+API_ROUTE=$(perl -e "print \"@INC[2]\"")
+API_ROUTE_LOADER="${API_ROUTE}/Api/Ocsinventory/Restapi/Loader.pm"
 
 echo
 echo "+----------------------------------------------------------+"
@@ -84,13 +84,8 @@ if [ ! -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
 fi
 
 # Configure zz-ocsinventory-restapi file
-if [ ! -f ${API_CONF_FILE} ] && [ -z ${OCS_DISABLE_API_MODE+x} ]; then
-	if [ -z ${OCS_API_RESTRICTED+x} ]; then
-		cp /tmp/conf/ocsinventory-restapi.conf ${API_CONF_FILE}
-	else
-		cp /tmp/conf/ocsinventory-restapi-restricted.conf ${API_CONF_FILE}
-		htpasswd -cb /etc/apache2/conf-available/.htaccess ${OCS_API_USER} ${OCS_API_PASS}
-	fi
+if [ ! -f ${API_CONF_FILE} ] && [ -z ${OCS_DISABLE_API_MODE+x} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
+	cp /tmp/conf/ocsinventory-restapi.conf ${API_CONF_FILE}
 	sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' ${API_CONF_FILE}
 	sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' ${API_CONF_FILE}
 	sed -i 's/DATABASE_NAME/'"$OCS_DB_NAME"'/g' ${API_CONF_FILE}

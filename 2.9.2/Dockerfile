@@ -68,7 +68,7 @@ RUN sed -ri \
 COPY conf/ /tmp/conf
 COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
-EXPOSE 80 443
+EXPOSE 80
 
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#entrypoint
 ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
