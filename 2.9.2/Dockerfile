@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV OCS_VERSION nightly
+ENV OCS_VERSION 2.9.2
 
 LABEL maintainer="contact@ocsinventory-ng.org" \
       version="${OCS_VERSION}" \
@@ -47,13 +47,13 @@ RUN apt-get update && apt-get install -y \
     php-zip \
     php-gd 
 
-RUN wget http://download.ocsinventory-ng.org/nightly/latest.tar.gz -P /tmp && \
-    tar xzf /tmp/latest.tar.gz -C /tmp;
+RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${OCS_VERSION}/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -P /tmp && \
+    tar xzf /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -C /tmp;
 
-RUN cd /tmp/OCSNG_UNIX_SERVER/Apache/ && \
+RUN cd /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/Apache/ && \
     perl Makefile.PL && \
     make && \
-    make install ;
+    make install
 
 WORKDIR /etc/apache2/conf-available
 

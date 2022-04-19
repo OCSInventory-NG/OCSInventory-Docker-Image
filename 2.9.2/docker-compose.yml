@@ -2,14 +2,14 @@ version: '3'
 
 services:
   ocsapplication:
-    image: ocsinventory/ocsinventory-docker-image:nightly
+    image: ocsinventory/ocsinventory-docker-image:2.9.2
     container_name : ocsinventory-server
     restart: always
-    ports:
+    expose:
       - "80"
     volumes:
       - "perlcomdata:/etc/ocsinventory-server"
-      - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports"
+      - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
       - "varlibdata:/var/lib/ocsinventory-reports"
       - "httpdconfdata:/etc/apache2/conf-available"
     environment:
@@ -30,7 +30,7 @@ services:
     image : mysql:8.0
     container_name : ocsinventory-db
     restart: always
-    ports :
+    expose :
       - "3306"
     volumes :
       - ./sql/:/docker-entrypoint-initdb.d/

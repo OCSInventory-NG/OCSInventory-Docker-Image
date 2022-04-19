@@ -27,11 +27,11 @@ mkdir -p $OCS_VARLIB_DIR/scripts
 mkdir -p $OCS_VARLIB_DIR/snmp
 
 if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/var.php ]; then
-	cp -r /tmp/OCSNG_UNIX_SERVER/ocsreports/ ${OCS_WEBCONSOLE_DIR}
+	cp -r /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/ocsreports/ ${OCS_WEBCONSOLE_DIR}
 	rm -rf ${DB_CONFIG_INC_FILE}
 fi;
 
-cp -R /tmp/OCSNG_UNIX_SERVER/Api/ ${API_ROUTE}
+cp -R /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/Api/ ${API_ROUTE}
 
 if [ ! -z ${OCS_DISABLE_API_MODE+x} ]; then
 	echo
@@ -125,6 +125,7 @@ fi
 
 # Generate dbconfig.inc.php
 if [ ! -f ${DB_CONFIG_INC_FILE} ] && [ -z ${OCS_DISABLE_WEB_MODE+x} ]; then
+
 	cp /tmp/conf/dbconfig.inc.php $OCS_WEBCONSOLE_DIR/ocsreports
 	sed -i 's/OCS_DB_NAME/'"$OCS_DB_NAME"'/g' ${DB_CONFIG_INC_FILE}
 	sed -i 's/OCS_READ_NAME/'"$OCS_DB_SERVER"'/g' ${DB_CONFIG_INC_FILE}
