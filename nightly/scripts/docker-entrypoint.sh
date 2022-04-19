@@ -1,9 +1,12 @@
 #!/bin/bash
 
-API_CONF_FILE="/etc/httpd/conf.d/zz-ocsinventory-restapi.conf"
-SRV_CONF_FILE="/etc/httpd/conf.d/z-ocsinventory-server.conf"
-REPORTS_CONF_FILE="/etc/httpd/conf.d/ocsinventory-reports.conf"
+API_CONF_FILE="/etc/apache2/conf-available/zz-ocsinventory-restapi.conf"
+SRV_CONF_FILE="/etc/apache2/conf-available/z-ocsinventory-server.conf"
+REPORTS_CONF_FILE="/etc/apache2/conf-available/ocsinventory-reports.conf"
 DB_CONFIG_INC_FILE="${OCS_WEBCONSOLE_DIR}/ocsreports/dbconfig.inc.php"
+
+API_ROUTE=$(perl -e "print \"@INC[2]\"")
+API_ROUTE_LOADER="${API_ROUTE}/Api/Ocsinventory/Restapi/Loader.pm"
 
 echo
 echo "+----------------------------------------------------------+"
@@ -28,7 +31,7 @@ if [ ! -f $OCS_WEBCONSOLE_DIR/ocsreports/var.php ]; then
 	rm -rf ${DB_CONFIG_INC_FILE}
 fi;
 
-cp -r /tmp/OCSNG_UNIX_SERVER/Api/ /usr/local/share/perl5
+cp -R /tmp/OCSNG_UNIX_SERVER/Api/ ${API_ROUTE}
 
 if [ ! -z ${OCS_DISABLE_API_MODE+x} ]; then
 	echo
@@ -64,7 +67,7 @@ echo "|   Setting Apache Server Name to '${APACHE_SERVER_NAME:-localhost}'"
 echo "+----------------------------------------------------------+"
 echo
 sed -ri -e "s!^#(ServerName)\s+\S+!\1 ${APACHE_SERVER_NAME:-localhost}:80!g" \
-      "/etc/httpd/conf/httpd.conf"
+      "/etc/apache2/apache2.conf"
 
 # Configure z-ocsinventory-server file 
 if [ ! -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
@@ -81,16 +84,16 @@ if [ ! -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
 fi
 
 # Configure zz-ocsinventory-restapi file
-if [ ! -f ${API_CONF_FILE} ] && [ -z ${OCS_DISABLE_API_MODE+x} ]; then
-    cp /tmp/conf/ocsinventory-restapi.conf ${API_CONF_FILE}
-       sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' ${API_CONF_FILE}
-       sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' ${API_CONF_FILE}
-       sed -i 's/DATABASE_NAME/'"$OCS_DB_NAME"'/g' ${API_CONF_FILE}
-       sed -i 's/DATABASE_USER/'"$OCS_DB_USER"'/g' ${API_CONF_FILE}
-       sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' ${API_CONF_FILE}
-       sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' ${API_CONF_FILE}
-       sed -i 's/REST_API_PATH/\/usr\/local\/share\/perl5/g' ${API_CONF_FILE}
-       sed -i 's/REST_API_LOADER_PATH/\/usr\/local\/share\/perl5\/Api\/Ocsinventory\/Restapi\/Loader.pm/g' ${API_CONF_FILE}
+if [ ! -f ${API_CONF_FILE} ] && [ -z ${OCS_DISABLE_API_MODE+x} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
+	cp /tmp/conf/ocsinventory-restapi.conf ${API_CONF_FILE}
+	sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' ${API_CONF_FILE}
+	sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' ${API_CONF_FILE}
+	sed -i 's/DATABASE_NAME/'"$OCS_DB_NAME"'/g' ${API_CONF_FILE}
+	sed -i 's/DATABASE_USER/'"$OCS_DB_USER"'/g' ${API_CONF_FILE}
+	sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' ${API_CONF_FILE}
+	sed -i 's/OCS_SSL_ENABLED/'"$OCS_SSL_ENABLED"'/g' ${API_CONF_FILE}
+	sed -i 's/REST_API_PATH/'"${API_ROUTE//\//\\/}"'/g' ${API_CONF_FILE}
+	sed -i 's/REST_API_LOADER_PATH/'"${API_ROUTE_LOADER//\//\\/}"'/g' ${API_CONF_FILE}
 fi
 
 # Replace Variables
@@ -155,6 +158,11 @@ echo
 cd /tmp
 shopt -s extglob
 rm -rf !("conf")
+
+# Enable conf
+a2enconf ocsinventory-reports
+a2enconf z-ocsinventory-server
+a2enconf zz-ocsinventory-restapi
 
 # Apache start
 if [ ! -d "$APACHE_RUN_DIR" ]; then
