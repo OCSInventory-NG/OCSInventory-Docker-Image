@@ -45,7 +45,8 @@ RUN apt-get update && apt-get install -y \
     php-curl \
     php-xml \
     php-zip \
-    php-gd 
+    php-gd \
+    php-ldap
 
 RUN wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/${OCS_VERSION}/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -P /tmp && \
     tar xzf /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}.tar.gz -C /tmp;
