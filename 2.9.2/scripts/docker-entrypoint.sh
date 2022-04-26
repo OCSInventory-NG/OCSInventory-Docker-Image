@@ -84,7 +84,7 @@ if [ ! -f ${SRV_CONF_FILE} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
 fi
 
 # Configure zz-ocsinventory-restapi file
-if [ ! -f ${API_CONF_FILE} ] && [ -z ${OCS_DISABLE_API_MODE+x} ] && [ -z ${OCS_DISABLE_COM_MODE+x} ]; then
+if [ ! -f ${API_CONF_FILE} ] && [ -z ${OCS_DISABLE_API_MODE+x} ]; then
 	cp /tmp/conf/ocsinventory-restapi.conf ${API_CONF_FILE}
 	sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' ${API_CONF_FILE}
 	sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' ${API_CONF_FILE}
