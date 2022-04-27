@@ -58,12 +58,8 @@ RUN cd /tmp/OCSNG_UNIX_SERVER-${OCS_VERSION}/Apache/ && \
 WORKDIR /etc/apache2/conf-available
 
 # Redirect Apache2 Logs to stdout e stderr
-# https://github.com/docker-library/httpd/blob/5f92ab18146f41d1d324e99c5e197bdeda65d063/2.4/Dockerfile#L202
-RUN sed -ri \
-      -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
-      -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
-      -e 's!^(\s*TransferLog)\s+\S+!\1 /proc/self/fd/1!g' \
-      "/etc/apache2/apache2.conf"
+RUN ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
+    ln -sf /proc/self/fd/2 /var/log/apache2/error.log
 
 COPY conf/ /tmp/conf
 COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
