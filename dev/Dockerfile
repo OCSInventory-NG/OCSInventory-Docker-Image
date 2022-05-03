@@ -51,7 +51,8 @@ RUN apt-get update && apt-get install -y \
     git \
     vim \
     nano \
-    composer
+    composer \
+    php-ldap
 
 COPY conf/* /tmp/
 COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
