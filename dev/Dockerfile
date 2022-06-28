@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL maintainer="contact@ocsinventory-ng.org" \
       version="dev" \
@@ -54,9 +54,11 @@ RUN apt-get update && apt-get install -y \
     composer \
     php-ldap
 
-COPY conf/* /tmp/
-COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
+COPY conf/* /tmp/conf/
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+COPY ./docker-entrypoint.d /docker-entrypoint.d
 
 EXPOSE 80 443
 
-ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["/usr/sbin/apache2", "-DFOREGROUND"]
