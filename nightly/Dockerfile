@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ENV OCS_VERSION nightly
 
@@ -63,10 +63,12 @@ RUN ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
     ln -sf /proc/self/fd/2 /var/log/apache2/error.log
 
 COPY conf/ /tmp/conf
-COPY ./scripts/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
+
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+COPY ./docker-entrypoint.d /docker-entrypoint.d
 
 EXPOSE 80
 
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#entrypoint
-ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/sbin/apache2", "-DFOREGROUND"]
