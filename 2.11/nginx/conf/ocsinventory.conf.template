@@ -37,6 +37,7 @@ server {
     location /ocsapi {
         auth_basic "OCS Api area";
         auth_basic_user_file /etc/nginx/auth/${API_AUTH_FILE};
+        proxy_pass              http://ocsapplication/ocsapi;
     }
 
     location /download {
@@ -44,5 +45,6 @@ server {
         proxy_connect_timeout   ${CONNECT_TIMEOUT};
         proxy_send_timeout      ${SEND_TIMEOUT};
         client_max_body_size    ${MAX_BODY_SIZE};
+	proxy_pass              http://ocsapplication/download;
     }
 }
