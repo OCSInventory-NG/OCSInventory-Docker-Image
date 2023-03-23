@@ -49,7 +49,7 @@ chown -R $APACHE_RUN_USER: $OCS_VARLIB_DIR
 chown -R $APACHE_RUN_USER: $OCS_WEBCONSOLE_DIR
 
 # rm install.php
-if [ -f $OCS_WEBCONSOLE_DIR/ocsreports/install.php ]; then
+if [ -f $OCS_WEBCONSOLE_DIR/ocsreports/install.php ] && [ $OCS_INSTALL_ENABLED -eq "0" ]; then
     rm $OCS_WEBCONSOLE_DIR/ocsreports/install.php
 fi
 

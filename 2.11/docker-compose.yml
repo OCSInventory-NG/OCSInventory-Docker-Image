@@ -19,6 +19,9 @@ services:
       OCS_DB_NAME: ocsweb
       # See documentation to set up SSL for MySQL
       OCS_SSL_ENABLED: 0
+      # Enable with 1 to be able to use install.php, if 
+      # you do not already have a DB
+      OCS_INSTALL_ENABLED: 0
     links:
       - ocsdb
     networks:

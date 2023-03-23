@@ -46,7 +46,7 @@ ENV APACHE_RUN_USER=www-data APACHE_RUN_GROUP=www-data \
     OCS_LOG_DIR=/var/log/ocsinventory-server OCS_VARLIB_DIR=/var/lib/ocsinventory-reports/ OCS_WEBCONSOLE_DIR=/usr/share/ocsinventory-reports \
     OCS_PERLEXT_DIR=/etc/ocsinventory-server/perl/ OCS_PLUGINSEXT_DIR=/etc/ocsinventory-server/plugins/ \
     OCS_SSL_ENABLED=0 OCS_SSL_WEB_MODE=DISABLED OCS_SSL_COM_MODE=DISABLED OCS_SSL_KEY=/path/to/key OCS_SSL_CERT=/path/to/cert OCS_SSL_CA=/path/to/ca \
-    TZ=Europe/Paris
+    OCS_INSTALL_ENABLED=0 TZ=Europe/Paris
     
 ENV OCS_VERSION 2.11.1
 
