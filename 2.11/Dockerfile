@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-ENV OCS_VERSION 2.11.0
+ENV OCS_VERSION 2.11.1
 
 LABEL maintainer="contact@ocsinventory-ng.org" \
       version="${OCS_VERSION}" \
