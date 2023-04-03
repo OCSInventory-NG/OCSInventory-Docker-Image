@@ -17,6 +17,8 @@ ENV APACHE_RUN_USER=www-data APACHE_RUN_GROUP=www-data \
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     # install necessary packages
     && apt-get update && apt-get install --no-install-recommends -y \
+        cron \
+        nano \
         wget \
         curl \
         make \
