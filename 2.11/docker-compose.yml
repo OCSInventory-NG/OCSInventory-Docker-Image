@@ -12,6 +12,8 @@ services:
       - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
       - "varlibdata:/var/lib/ocsinventory-reports"
       - "httpdconfdata:/etc/apache2/conf-available"
+      # make use of cron with crontab inside of container by mounting the specified file
+      # - "./crontab:/etc/cron/docker-crontab"
     environment:
       OCS_DB_SERVER: ocsinventory-db
       OCS_DB_USER: ocsuser
