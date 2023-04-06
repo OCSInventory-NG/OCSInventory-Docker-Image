@@ -18,7 +18,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     # install necessary packages
     && apt-get update && apt-get install --no-install-recommends -y \
         cron \
-        nano \
         wget \
         curl \
         make \
