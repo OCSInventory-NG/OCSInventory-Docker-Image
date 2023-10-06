@@ -12,6 +12,7 @@ services:
       - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
       - "varlibdata:/var/lib/ocsinventory-reports"
       - "httpdconfdata:/etc/apache2/conf-available"
+      - "profilesdata:/var/lib/profile-config"
     environment:
       OCS_DB_SERVER: ocsinventory-db
       OCS_DB_USER: ocsuser
@@ -83,4 +84,5 @@ volumes:
   varlibdata:
   httpdconfdata:
   sqldata:
+  profilesdata:
   

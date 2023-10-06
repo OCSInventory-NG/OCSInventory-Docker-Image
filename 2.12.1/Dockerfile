@@ -18,7 +18,7 @@ ENV APACHE_RUN_USER=www-data APACHE_RUN_GROUP=www-data \
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-VOLUME /var/lib/ocsinventory-reports /etc/ocsinventory-server /usr/share/ocsinventory-reports/ocsreports/extensions
+VOLUME /var/lib/ocsinventory-reports /etc/ocsinventory-server /usr/share/ocsinventory-reports/ocsreports/extensions /var/lib/profile-config
 
 RUN apt-get update && apt-get install -y \
     wget \
@@ -68,6 +68,10 @@ COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 COPY ./docker-entrypoint.d /docker-entrypoint.d
 
 EXPOSE 80
+
+# Copy the volume content to profile directory
+RUN rm -r /usr/share/ocsinventory-reports/ocsreports/config/profiles
+COPY -r ./var/lib/profile-config /usr/share/ocsinventory-reports/ocsreports/config/profiles
 
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#entrypoint
 ENTRYPOINT ["/docker-entrypoint.sh"]

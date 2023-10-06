@@ -1,4 +1,6 @@
 #!/bin/bash
+PROFILE_CONF_DIRECTORY="/usr/share/ocsinventory-reports/ocsreports/config/profiles"
+PROFILE_CONF_DIRECTORY_VOLUME="/var/lib/profile-config"
 
 echo "+----------------------------------------------------------+"
 echo "|   Setting Apache Server Name to '${APACHE_SERVER_NAME:-localhost}'"
@@ -25,6 +27,13 @@ fi
 
 if [ -f "$APACHE_PID_FILE" ]; then
     rm "$APACHE_PID_FILE"
+fi
+
+# Configure profile folder
+if [ ! -f ${PROFILE_CONF_DIRECTORY} ]; then
+    mkdir "$PROFILE_CONF_DIRECTORY_VOLUME"
+    chown $APACHE_RUN_USER:$APACHE_RUN_GROUP "$PROFILE_CONF_DIRECTORY_VOLUME"
+	cp -r ${PROFILE_CONF_DIRECTORY} ${PROFILE_CONF_DIRECTORY_VOLUME}
 fi
 
 echo "+----------------------------------------------------------+"
