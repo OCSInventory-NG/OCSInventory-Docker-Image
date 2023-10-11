@@ -10,6 +10,7 @@ services:
     volumes:
       - "perlcomdata:/etc/ocsinventory-server"
       - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
+      - "profilesdata:/usr/share/ocsinventory-reports/ocsreports/config/profiles/"
       - "varlibdata:/var/lib/ocsinventory-reports"
       - "httpdconfdata:/etc/apache2/conf-available"
     environment:
@@ -80,6 +81,7 @@ networks:
 volumes:
   perlcomdata:
   ocsreportsdata:
+  profilesdata:
   varlibdata:
   httpdconfdata:
   sqldata:
