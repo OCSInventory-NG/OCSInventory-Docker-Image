@@ -25,6 +25,7 @@ server {
     ssl_certificate_key /etc/nginx/certs/${SSL_KEY};
 
     location / {
+        rewrite ^/$ /ocsreports permanent;
         proxy_redirect          off;
         proxy_set_header        X-Forwarded-Proto $scheme;
         proxy_set_header        Host              $http_host;
