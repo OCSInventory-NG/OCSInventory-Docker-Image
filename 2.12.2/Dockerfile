@@ -62,7 +62,7 @@ WORKDIR /etc/apache2/conf-available
 RUN ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
     ln -sf /proc/self/fd/2 /var/log/apache2/error.log
 
-COPY conf/ /tmp/conf
+COPY conf/* /tmp/conf/
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 COPY ./docker-entrypoint.d /docker-entrypoint.d
