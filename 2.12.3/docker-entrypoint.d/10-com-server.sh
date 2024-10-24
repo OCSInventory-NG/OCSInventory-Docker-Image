@@ -42,6 +42,9 @@ if [ -f ${SRV_CONF_FILE} ]; then
 	done
 fi
 
+# Quick fix https://github.com/OCSInventory-NG/OCSInventory-Docker-Stack/issues/16
+sed -i 's/^.*PerlSetEnv OCS_OPT_DBI_PRINT_ERROR.*$/PerlSetEnv OCS_OPT_DBI_PRINT_ERROR 0/' ${SRV_CONF_FILE}
+
 # Permissions
 chown -R $APACHE_RUN_USER: $OCS_LOG_DIR
 
