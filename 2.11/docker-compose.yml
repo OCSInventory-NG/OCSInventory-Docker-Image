@@ -12,6 +12,8 @@ services:
       - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
       - "varlibdata:/var/lib/ocsinventory-reports"
       - "httpdconfdata:/etc/apache2/conf-available"
+      # make use of cron with crontab inside of container by mounting the specified file
+      # - "./crontab:/etc/cron/docker-crontab"
     environment:
       OCS_DB_SERVER: ocsinventory-db
       OCS_DB_USER: ocsuser
@@ -19,6 +21,9 @@ services:
       OCS_DB_NAME: ocsweb
       # See documentation to set up SSL for MySQL
       OCS_SSL_ENABLED: 0
+      # Enable with 1 to be able to use install.php, if 
+      # you do not already have a DB
+      OCS_INSTALL_ENABLED: 0
     links:
       - ocsdb
     networks:
