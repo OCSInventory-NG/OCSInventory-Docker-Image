@@ -14,15 +14,15 @@ fi
 # Configure z-ocsinventory-server file
 if [ ! -f ${SRV_CONF_FILE} ]; then
 	cp /tmp/conf/ocsinventory-server.conf ${SRV_CONF_FILE}
-	sed -i 's/VERSION_MP/2/g' ${SRV_CONF_FILE}
-	sed -i 's/DATABASE_SERVER/'"$OCS_DB_SERVER"'/g' ${SRV_CONF_FILE}
-	sed -i 's/DATABASE_PORT/'"$OCS_DB_PORT"'/g' ${SRV_CONF_FILE}
-	sed -i 's/DATABASE_NAME/'"$OCS_DB_NAME"'/g' ${SRV_CONF_FILE}
-	sed -i 's/DATABASE_USER/'"$OCS_DB_USER"'/g' ${SRV_CONF_FILE}
-	sed -i 's/DATABASE_PASSWD/'"$OCS_DB_PASS"'/g' ${SRV_CONF_FILE}
-	sed -i 's/"PATH_TO_LOG_DIRECTORY"/'"${OCS_LOG_DIR//\//\\/}"'/g' ${SRV_CONF_FILE}
-	sed -i 's/"PATH_TO_PLUGINS_PERL_DIRECTORY"/'"${OCS_PERLEXT_DIR//\//\\/}"'/g' ${SRV_CONF_FILE}
-	sed -i 's/"PATH_TO_PLUGINS_CONFIG_DIRECTORY"/'"${OCS_PLUGINSEXT_DIR//\//\\/}"'/g' ${SRV_CONF_FILE}
+	perl -i -p -e 's/VERSION_MP/2/g' ${SRV_CONF_FILE}
+	perl -i -p -e 's/DATABASE_SERVER/$ENV{OCS_DB_SERVER}/g' ${SRV_CONF_FILE}
+	perl -i -p -e 's/DATABASE_PORT/$ENV{OCS_DB_PORT}/g' ${SRV_CONF_FILE}
+	perl -i -p -e 's/DATABASE_NAME/$ENV{OCS_DB_NAME}/g' ${SRV_CONF_FILE}
+	perl -i -p -e 's/DATABASE_USER/$ENV{OCS_DB_USER}/g' ${SRV_CONF_FILE}
+	perl -i -p -e 's/DATABASE_PASSWD/$ENV{OCS_DB_PASS}/g' ${SRV_CONF_FILE}
+	perl -i -p -e 's/"PATH_TO_LOG_DIRECTORY"/$ENV{OCS_LOG_DIR}/g' ${SRV_CONF_FILE}
+	perl -i -p -e 's/"PATH_TO_PLUGINS_PERL_DIRECTORY"/$ENV{OCS_PERLEXT_DIR}/g' ${SRV_CONF_FILE}
+	perl -i -p -e 's/"PATH_TO_PLUGINS_CONFIG_DIRECTORY"/$ENV{OCS_PLUGINSEXT_DIR}/g' ${SRV_CONF_FILE}
 fi
 
 # Replace Variables
